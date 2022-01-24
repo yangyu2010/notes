@@ -1,30 +1,43 @@
 ```
 var a = "123d"
-print(UnsafeRawPointer(&a))
+var b = "123456789abcdefghijk"
+// print(UnsafeRawPointer(&a))
+// print(UnsafeRawPointer(&b))
 ```
 
 ```
 0x000000010000c1f8
+0x000000010000c208
 (lldb) x/4g 0x000000010000c1f8
 0x10000c1f8: 0x0000000064333231 0xe400000000000000
-0x10000c208: 0x0000000000000000 0x0000000000000000
+0x10000c208: 0xd000000000000014 0x8000000100007800
+(lldb) x/4g 0x000000010000c208
+0x10000c208: 0xd000000000000014 0x8000000100007800
+0x10000c218: 0x0000000000000000 0x0000000000000000
 (lldb) 
 ```
 
 ```
 Test_Swift`main:
-    0x100003790 <+0>:  pushq  %rbp
-    0x100003791 <+1>:  movq   %rsp, %rbp
-->  0x100003794 <+4>:  leaq   0x40a5(%rip), %rdi        ; "123d"
-    0x10000379b <+11>: movl   $0x4, %esi
-    0x1000037a0 <+16>: movl   $0x1, %edx
-    0x1000037a5 <+21>: callq  0x100007578               ; symbol stub for: Swift.String.init(_builtinStringLiteral: Builtin.RawPointer, utf8CodeUnitCount: Builtin.Word, isASCII: Builtin.Int1) -> Swift.String
-    0x1000037aa <+26>: movq   %rax, %rcx
-    0x1000037ad <+29>: xorl   %eax, %eax
-    0x1000037af <+31>: movq   %rcx, 0x8a2a(%rip)        ; Test_Swift.a : Swift.String
-    0x1000037b6 <+38>: movq   %rdx, 0x8a2b(%rip)        ; Test_Swift.a : Swift.String + 8
-    0x1000037bd <+45>: popq   %rbp
-    0x1000037be <+46>: retq   
+    0x100003740 <+0>:  pushq  %rbp
+    0x100003741 <+1>:  movq   %rsp, %rbp
+    0x100003744 <+4>:  leaq   0x40d5(%rip), %rdi        ; "123d"
+    0x10000374b <+11>: movl   $0x4, %esi
+    0x100003750 <+16>: movl   $0x1, %edx
+    0x100003755 <+21>: callq  0x100007558               ; symbol stub for: Swift.String.init(_builtinStringLiteral: Builtin.RawPointer, utf8CodeUnitCount: Builtin.Word, isASCII: Builtin.Int1) -> Swift.String
+    0x10000375a <+26>: movq   %rax, 0x8a7f(%rip)        ; Test_Swift.a : Swift.String
+    0x100003761 <+33>: movq   %rdx, 0x8a80(%rip)        ; Test_Swift.a : Swift.String + 8
+->  0x100003768 <+40>: leaq   0x40c1(%rip), %rdi        ; "123456789abcdefghijk"
+    0x10000376f <+47>: movl   $0x14, %esi
+    0x100003774 <+52>: movl   $0x1, %edx
+    0x100003779 <+57>: callq  0x100007558               ; symbol stub for: Swift.String.init(_builtinStringLiteral: Builtin.RawPointer, utf8CodeUnitCount: Builtin.Word, isASCII: Builtin.Int1) -> Swift.String
+    0x10000377e <+62>: movq   %rax, %rcx
+    0x100003781 <+65>: xorl   %eax, %eax
+    0x100003783 <+67>: movq   %rcx, 0x8a66(%rip)        ; Test_Swift.b : Swift.String
+    0x10000378a <+74>: movq   %rdx, 0x8a67(%rip)        ; Test_Swift.b : Swift.String + 8
+    0x100003791 <+81>: popq   %rbp
+    0x100003792 <+82>: retq   
+
 ```
 通过下面这行汇编可以看出
 ```
@@ -33,14 +46,16 @@ movl   $0x4, %esi
 callq  0x100007578
 ```
 
-1. 把一个全局变量的地址值给了rdi (0x00(%rip)这一般是全局变量, 准确来说在_text_cstring_中)
+1. 把一个全局变量的地址值给了rdi (0x00(%rip)这一般是全局变量, 准确来说在_TEXT_cstring_中)
 2. 把0x4给了rsi 因为字符串长度是4
 3. 随后调用了一个`Swift.String.init`的方法 
 4. 比较rsi和0xf
-5. 
+5. 如果小于0xf, 返回rax是具体的值, 如`0x0000000064333231` rdx是`0xe400000000000000` 其中`4`是字符串长度 `e`是标志位
+6. 如果大于0xf, 返回rax是`0xd000000000000014` 其`14`是字符串长度 `d0`是标志位 rdx是 `0x8000000100007800` 减去`0x7fffffffffffffe0` 即是真实的字符串地址`0x100007820` 这个值在`Mach-o`文件中如下
+   
 
 
-![图1](Xnip2022-01-20_19-51-29.jpg)
+![图1](Xnip2022-01-24_10-40-54.jpg)
 
 
 ```
