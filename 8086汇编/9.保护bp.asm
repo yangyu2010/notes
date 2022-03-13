@@ -1,7 +1,7 @@
 assume cs:code, ds:data, ss:stack
 
 stack segment
-    db 30 dup(99h)  
+    db 40 dup(99h)  
 stack ends    
 
 
@@ -23,15 +23,14 @@ start:
         push 0304h
         call mathFunc           
         add sp, 4h
-                     
-        mov bx, ax
-          
+           
         ; exit
         mov ah, 4ch
         int 21h
 
-mathFunc:
-    mov bp, sp      
+mathFunc:     
+    push bp
+    mov bp, sp
     sub sp, 10
     
     mov ss:[bp-2], 0506h
@@ -40,13 +39,39 @@ mathFunc:
     add ax, ss:[bp-4]    
     mov ss:[bp-6], ax
     
-    mov ax, ss:[bp+2]
-    add ax, ss:[bp+4]   
+    mov ax, ss:[bp+4]
+    add ax, ss:[bp+6]   
     add ax, ss:[bp-6]
     
-    mov sp, bp
-    ret
+    push 1112h
+    push 1314h
+    call mathFunc2           
+    add sp, 4h
         
+    mov sp, bp 
+    pop bp
+    ret
+
+mathFunc2:     
+    push bp
+    mov bp, sp
+    sub sp, 10
+    
+    mov ss:[bp-2], 1516h
+    mov ss:[bp-4], 1718h
+    mov ax, ss:[bp-2]
+    add ax, ss:[bp-4]    
+    mov ss:[bp-6], ax
+    
+    mov ax, ss:[bp+4]
+    add ax, ss:[bp+6]   
+    add ax, ss:[bp-6]
+    
+    mov sp, bp 
+    pop bp
+    ret
+    
+    
 code ends    
 
-end startrt
+end start
