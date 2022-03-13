@@ -21,8 +21,12 @@ start:
         
         push 1122h
         push 3344h
-        call mathFunc           
-                   
+        call mathFunc   
+        ; 调用函数完成后 11 22 33 44还在栈中
+        ; 直接把sp指针+4恢复到调用函数之前
+        ; 栈平衡 函数调用前后栈指针保持不变                 
+        add sp, 4h
+
         mov bx, ax
           
         ; exit
