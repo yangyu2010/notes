@@ -79,9 +79,34 @@ void test4() {
     cout << b << endl;
 }
 
+
+void swapInt1(int a, int b) {
+    int tmp = a;
+    a = b;
+    b = tmp;
+}
+
+void swapInt2(int *a, int *b) {
+    int tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+
+void swapInt3(int &a, int &b) {
+    int tmp = a;
+    a = b;
+    b = tmp;
+}
+
 int main(int argc, const char * argv[]) {
 
-    test4();
+    int a = 10;
+    int b = 20;
+//    swapInt1(a, b);
+//    swapInt2(&a, &b);
+    swapInt3(a, b);
     
+    cout << "a=" << a << ", b=" << b << endl;
+ 
     return 0;
 }
