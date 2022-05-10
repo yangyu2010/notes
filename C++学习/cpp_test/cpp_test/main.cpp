@@ -144,7 +144,7 @@ int main2(int argc, const char * argv[]) {
     return 0;
 }
 
-int main(int argc, const char * argv[]) {
+int main3(int argc, const char * argv[]) {
 
     Person person;
     person.m_id = 1;
@@ -158,4 +158,59 @@ int main(int argc, const char * argv[]) {
 
     
     return 0;
+}
+
+
+// ----------------------------------------------拷贝函数----------------------------------------------
+// ----------------------------------------------拷贝函数----------------------------------------------
+// ----------------------------------------------拷贝函数----------------------------------------------
+// ----------------------------------------------拷贝函数----------------------------------------------
+
+
+class Car {
+    int m_price;
+    int m_length;
+    char *m_name;
+public:
+    Car(int price = 0, int length = 0, char *name = NULL) : m_price(price), m_length(length), m_name(name) {
+        cout << "Car(int price = 0, int length = 0)" << endl;
+    }
+
+//    // 拷贝构造函数
+//    Car(const Car &car) {
+//        cout << "Car(const Car &car)" << endl;
+//        m_price = car.m_price;
+//        m_length = car.m_length;
+//    }
+    
+    void display() {
+        cout << m_price << ", " << m_length << endl;
+    }
+};
+
+int main4(int argc, const char * argv[]) {
+
+    char name[] = {'a', 'b', 'c', '\0'};
+    Car car1(3, 4, name);
+    Car car2(car1);
+    
+    cout << name << endl;
+    cout << &name << endl;
+
+    cout << &car1 << endl;
+    cout << &car2 << endl;
+
+    
+    return 0;
+    
+}
+
+
+
+int main(int argc, const char * argv[]) {
+
+
+    
+    return 0;
+    
 }

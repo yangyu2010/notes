@@ -1,0 +1,3 @@
+﻿  main.cpp
+c:\users\yu yang\source\repos\4.构造函数\4.构造函数\main.cpp(72): warning C4930: “Person p5(void)”: 未调用原型函数(是否是有意用变量定义的?)
+  4.构造函数.vcxproj -> C:\Users\Yu Yang\source\repos\4.构造函数\Debug\4.构造函数.exe

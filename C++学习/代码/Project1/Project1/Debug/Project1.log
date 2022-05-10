@@ -1,0 +1,3 @@
+﻿  main.cpp
+c:\users\yu yang\source\repos\project1\project1\main.cpp(22): warning C4227: 使用了记时错误: 忽略引用上的限定符
+  Project1.vcxproj -> C:\Users\Yu Yang\source\repos\Project1\Debug\Project1.exe

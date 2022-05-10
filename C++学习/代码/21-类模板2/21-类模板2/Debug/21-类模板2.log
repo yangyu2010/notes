@@ -1,0 +1,4 @@
+﻿  main.cpp
+c:\users\yu yang\source\repos\21-类模板2\21-类模板2\main.cpp(45): warning C4018: “<”: 有符号/无符号不匹配
+  c:\users\yu yang\source\repos\21-类模板2\21-类模板2\main.cpp(79): note: 参见对正在编译的函数 模板 实例化“std::ostream &<<<float>(std::ostream &,const Array<float> &)”的引用
+  21-类模板2.vcxproj -> C:\Users\Yu Yang\source\repos\21-类模板2\Debug\21-类模板2.exe
