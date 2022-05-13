@@ -209,6 +209,52 @@ int main4(int argc, const char * argv[]) {
 
 int main(int argc, const char * argv[]) {
 
+    int age = 10;
+    int height = 20;
+
+    int array[] = {1, 2, 3, 4};
+    int (&ref1)[4] = array;
+    int *const &ref2 = array;
+    
+    /*
+    const int *p1 = &age;
+    // 可以
+    p1 = &height;
+    // 不可以
+    *p1 = 20;
+     */
+    
+    /*
+    int const *p2 = &age;
+    // 可以
+    p2 = &height;
+    // 不可以
+    *p2 = 20;
+     */
+    
+    /*
+    int * const p3 = &age;
+    // 不可以
+    p3 = &height;
+    // 可以
+    *p3 = 20;
+     */
+    
+    /*
+    const int * const p4 = &age;
+    // 不可以
+    p4 = &height;
+    // 不可以
+    *p4 = 20;
+     */
+    
+    /*
+    int const * const p5 = &age;
+    // 不可以
+    p5 = &height;
+    // 不可以
+    *p5 = 20;
+     */
 
     
     return 0;
