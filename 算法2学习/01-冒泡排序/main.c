@@ -2,7 +2,122 @@
 #include <stdio.h>
 #include <string.h>
 
+#define BOOL int
+#define TRUE 1
+#define FALSE 0
+
+// 记录下最后一次交换的位置
 int main()
+{
+
+    // int array[] = {1, 4, 6, 0, 71, 12, 9, 8, 26, 37, 44, 54};
+
+    // int array[] = {0, 1, 4, 6, 8, 9, 12, 26, 37, 44, 54, 71};
+    int array[] = {4, 6, 8, 9, 0, 1, 12, 26, 37, 44, 54, 71};
+
+    int arraySize = sizeof(array);
+    int intSize = sizeof(array[0]);
+    int length = arraySize / intSize;
+
+    for (int i = length; i > 0; i--)
+    {
+        int sortedIndex = 0;
+        for (int j = 1; j < i; j++)
+        {
+            if (array[j - 1] > array[j])
+            {
+                int temp = array[j - 1];
+                array[j - 1] = array[j];
+                array[j] = temp;
+
+                sortedIndex = j + 1;
+            }
+        }
+        i = sortedIndex;
+    }
+
+    for (int i = 0; i < length; i++)
+    {
+        printf("%d,", array[i]);
+    }
+
+    return 0;
+}
+
+// 冒泡排序(有序后提前退出)
+int main3()
+{
+
+    // int array[] = {1, 4, 6, 0, 71, 12, 9, 8, 26, 37, 44, 54};
+
+    int array[] = {0, 1, 4, 6, 8, 9, 12, 26, 37, 44, 54, 71};
+
+    int arraySize = sizeof(array);
+    int intSize = sizeof(array[0]);
+    int length = arraySize / intSize;
+
+    for (int i = length; i > 0; i--)
+    {
+        BOOL sorted = TRUE;
+        for (int j = 1; j < i; j++)
+        {
+            if (array[j - 1] > array[j])
+            {
+                int temp = array[j - 1];
+                array[j - 1] = array[j];
+                array[j] = temp;
+
+                sorted = FALSE;
+            }
+        }
+
+        if (sorted == TRUE)
+        {
+            break;
+        }
+    }
+
+    for (int i = 0; i < length; i++)
+    {
+        printf("%d,", array[i]);
+    }
+
+    return 0;
+}
+
+// 基础的冒泡排序
+int main2()
+{
+
+    int array[] = {71, 12, 9, 8, 26, 37, 44, 54};
+
+    int arraySize = sizeof(array);
+    int intSize = sizeof(array[0]);
+    int length = arraySize / intSize;
+
+    for (int i = length; i > 0; i--)
+    {
+        for (int j = 1; j < i; j++)
+        {
+            if (array[j - 1] > array[j])
+            {
+                int temp = array[j - 1];
+                array[j - 1] = array[j];
+                array[j] = temp;
+            }
+        }
+    }
+
+    for (int i = 0; i < length; i++)
+    {
+        printf("%d_", array[i]);
+    }
+
+    return 0;
+}
+
+// 测试代码
+int main1()
 {
     // printf("%d\n", 1111);
 
