@@ -8,14 +8,14 @@
  */
 
 typedef struct _heap {
-    int *heap;    //指向存放堆对数组
+    int *array;    //指向存放堆对数组
     int capacity; //堆的大小
     int size;     //堆目前的元素
 } heap;
 
 heap *createHeap(int capacity) {
     heap *h = (heap *)malloc(sizeof(heap));
-    h->heap = (int *)malloc(sizeof(int) * (capacity));
+    h->array = (int *)malloc(sizeof(int) * (capacity));
     // free(h->heap);
     // free(h);
     h->capacity = capacity;
@@ -27,9 +27,9 @@ heap *createHeap(int capacity) {
 void dump(heap *h) {
     // int count = h->size;
     int size = h->size;
-    int *heap = h->heap;
+    int *array = h->array;
     for (int i = 0; i < size; i++) {
-        printf("%d_", heap[i]);
+        printf("%d_", array[i]);
     }
 
     printf("\n");
@@ -64,8 +64,8 @@ void siftUp(heap *h, int index) {
         }
     */
 
-    int *heap = h->heap;
-    int element = heap[index];
+    int *array = h->array;
+    int element = array[index];
 
     /*
     每次把父节点的数据放下来
@@ -74,15 +74,15 @@ void siftUp(heap *h, int index) {
     */
     while (index > 0) {
         int parentIndex = (index - 1) / 2;
-        if (element > heap[parentIndex]) {
-            heap[index] = heap[parentIndex];
+        if (element > array[parentIndex]) {
+            array[index] = array[parentIndex];
             index = parentIndex;
         } else {
             break;
         }
     }
 
-    heap[index] = element;
+    array[index] = element;
 }
 
 // 下滤
@@ -94,7 +94,7 @@ void siftDown(heap *h, int index) {
     int size = h->size;
     int half = size >> 1;
 
-    int *heap = h->heap;
+    int *heap = h->array;
     int element = heap[index];
 
     while (index < half) {
@@ -137,9 +137,9 @@ void addElement(heap *h, int e) {
     }
 
     // 在数组最后加入新的元素
-    int *heap = h->heap;
+    int *array = h->array;
     int count = h->size;
-    heap[count++] = e;
+    array[count++] = e;
     h->size = count;
 
     siftUp(h, count - 1);
@@ -149,7 +149,7 @@ void addElement(heap *h, int e) {
         int childIndex = count - 1;
         // 父节点的位置
         int parentIndex = (childIndex - 1) / 2;
-        while ((parentIndex >= 0) && (heap[childIndex] > heap[parentIndex]))
+        while ((parentIndex >= 0) && (array[childIndex] > array[parentIndex]))
         {
             swap(heap, childIndex, parentIndex);
             childIndex = parentIndex;
@@ -167,14 +167,56 @@ void removelement(heap *h) {
 
     //用最后一个元素替代第一个元素
     // int size = h->size;
-    int *heap = h->heap;
-    heap[0] = heap[--h->size];
-    heap[h->size] = NULL;
+    int *array = h->array;
+    array[0] = array[--h->size];
+    array[h->size] = NULL;
 
     siftDown(h, 0);
 }
 
 int main() {
+    heap *h = createHeap(100);
+    int *array = h->array;
+
+    //int arr[] = {2, 1, 10, 21, 19, 6, 5, 12, 9};
+    int arr[] = {13, 76, 22, 56, 78, 26, 91, 59, 33, 62, 
+                  63, 93, 68, 39, 65, 86, 41, 88, 20};
+
+    int length = (sizeof(arr) / sizeof(int));
+
+    for (int i = 0; i < length; i++) {
+        h->size++;
+        array[i] = arr[i];
+    }
+
+    for (int i = length / 2 - 1; i >= 0; i--) {
+        siftDown(h, i);
+    }
+
+    dump(h);
+
+    while (h->size > 1) {
+        int temp = array[0];
+        // array[0] = array[--length];
+        array[0] = array[h->size - 1];
+        array[h->size - 1] = temp;
+
+        h->size -= 1;
+        siftDown(h, 0);
+
+        //dump(h);
+    }
+
+    //dump(h);
+
+    for (int i = 0; i < length; i++) {
+        printf("%d,", array[i]);
+    }
+
+    return 0;
+}
+
+int main2() {
     heap *h = createHeap(100);
 
     // 21_19_6_12_10_2_5_1_9
@@ -196,6 +238,7 @@ int main() {
     // int arr[] = {13, 76, 22, 56, 78, 26, 91, 59, 33, 62,
     //              63, 93, 68, 39, 65, 86, 41, 88, 20};
     // 93_88_91_86_63_78_65_59_76_56_62_22_68_26_39_13_41_33_20_
+    // 93_88_91_86_78_63_68_65_56_76_62_62_26_22_13_39_59_33_41_62_20_
     int i;
     for (i = 0; i < (sizeof(arr) / sizeof(int)); i++) {
         addElement(h, arr[i]);

@@ -17,6 +17,7 @@
         "iterator": "c",
         "utility": "c",
         "__bit_reference": "c",
-        "algorithm": "c"
+        "algorithm": "c",
+        "__tuple": "c"
     }
 }
