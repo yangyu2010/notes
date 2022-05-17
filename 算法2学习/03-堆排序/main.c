@@ -42,20 +42,91 @@ void swap(int *arr, int idx1, int idx2) {
     arr[idx2] = tmp;
 }
 
+// 上滤
 void siftUp(heap *h, int index) {
+    if (index >= h->size) {
+        return;
+    }
+
+    /*
+        int *heap = h->heap;
+        while (index > 0) {
+            int parentIndex = (index - 1) / 2;
+            if (heap[index] > heap[parentIndex]) {
+                int temp = heap[index];
+                heap[index] = heap[parentIndex];
+                heap[parentIndex] = temp;
+
+                index = parentIndex;
+            } else {
+                break;
+            }
+        }
+    */
+
     int *heap = h->heap;
+    int element = heap[index];
+
+    /*
+    每次把父节点的数据放下来
+    不做交换
+    到最后确定位置后再把新加的数据放入
+    */
     while (index > 0) {
         int parentIndex = (index - 1) / 2;
-        if (heap[index] > heap[parentIndex]) {
-            int temp = heap[index];
+        if (element > heap[parentIndex]) {
             heap[index] = heap[parentIndex];
-            heap[parentIndex] = temp;
-
             index = parentIndex;
         } else {
             break;
         }
     }
+
+    heap[index] = element;
+}
+
+// 下滤
+void siftDown(heap *h, int index) {
+    // while (index < 第一个叶子节点的位置)
+    // while (index < 非叶子节点的数量)
+    // int *array = h->heap;
+
+    int size = h->size;
+    int half = size >> 1;
+
+    int *heap = h->heap;
+    int element = heap[index];
+
+    while (index < half) {
+        // 非叶子节点的子节点数量情况
+        // 只有左子节点
+        // 有左右子节点
+
+        // 取出左子节点的下标和数据
+        int leftChildIndex = 2 * index + 1;
+        int leftChildElement = heap[leftChildIndex];
+
+        int childIndex = leftChildIndex;
+        int childElement = leftChildElement;
+
+        // 取出右子节点的下标
+        // 判断是否有下标 同时和左子节点比较大小 取出大的
+        int rightChildIndex = leftChildIndex + 1;
+        if (rightChildIndex < size &&
+            leftChildElement < heap[rightChildIndex]) {
+            childIndex = rightChildIndex;
+            childElement = heap[rightChildIndex];
+        }
+
+        if (childElement > element) {
+            heap[index] = childElement;
+            index = childIndex;
+        } else {
+            break;
+        }
+    }
+
+    heap[index] = element;
 }
 
 // 添加元素
@@ -87,7 +158,8 @@ void addElement(heap *h, int e) {
     */
 }
 
-void removeElement(heap *h) {
+// 移出堆顶元素
+void removelement(heap *h) {
 
     if (h->size < 1) {
         return;
@@ -97,6 +169,9 @@ void removeElement(heap *h) {
     // int size = h->size;
     int *heap = h->heap;
     heap[0] = heap[--h->size];
+    heap[h->size] = NULL;
+
+    siftDown(h, 0);
 }
 
 int main() {
@@ -116,9 +191,10 @@ int main() {
 
     */
     // int arr[] = {2, 1, 10, 21};
-    // int arr[] = {2, 1, 10, 21, 19, 6, 5, 12, 9};
-    int arr[] = {13, 76, 22, 56, 78, 26, 91, 59, 33, 62,
-                 63, 93, 68, 39, 65, 86, 41, 88, 20};
+    int arr[] = {2, 1, 10, 21, 19, 6, 5, 12, 9};
+
+    // int arr[] = {13, 76, 22, 56, 78, 26, 91, 59, 33, 62,
+    //              63, 93, 68, 39, 65, 86, 41, 88, 20};
     // 93_88_91_86_63_78_65_59_76_56_62_22_68_26_39_13_41_33_20_
     int i;
     for (i = 0; i < (sizeof(arr) / sizeof(int)); i++) {
@@ -126,24 +202,44 @@ int main() {
     }
     dump(h);
 
+    for (i = 0; i < (sizeof(arr) / sizeof(int)); i++) {
+        removelement(h);
+        dump(h);
+    }
+
     return 0;
 }
 
 int main1() {
-    printf("%d\n", 0 >> 1);
-    printf("%d\n", 1 >> 1);
+    printf("%d\n", 0 << 1);
+    printf("%d\n", 1 << 1);
 
-    printf("%d\n", 2 >> 1);
-    printf("%d\n", 3 >> 1);
+    printf("%d\n", 2 << 1);
+    printf("%d\n", 3 << 1);
 
-    printf("%d\n", 4 >> 1);
-    printf("%d\n", 5 >> 1);
+    printf("%d\n", 4 << 1);
+    printf("%d\n", 5 << 1);
 
-    printf("%d\n", 6 >> 1);
-    printf("%d\n", 7 >> 1);
+    printf("%d\n", 6 << 1);
+    printf("%d\n", 7 << 1);
 
-    printf("%d\n", 8 >> 1);
-    printf("%d\n", 9 >> 1);
+    printf("%d\n", 8 << 1);
+    printf("%d\n", 9 << 1);
+
+    // printf("%d\n", 0 >> 1);
+    // printf("%d\n", 1 >> 1);
+
+    // printf("%d\n", 2 >> 1);
+    // printf("%d\n", 3 >> 1);
+
+    // printf("%d\n", 4 >> 1);
+    // printf("%d\n", 5 >> 1);
+
+    // printf("%d\n", 6 >> 1);
+    // printf("%d\n", 7 >> 1);
+
+    // printf("%d\n", 8 >> 1);
+    // printf("%d\n", 9 >> 1);
 
     // printf("%d\n", 0 / 2);
     // printf("%d\n", 1 / 2);
