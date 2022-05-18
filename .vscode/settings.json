@@ -18,6 +18,7 @@
         "utility": "c",
         "__bit_reference": "c",
         "algorithm": "c",
-        "__tuple": "c"
+        "__tuple": "c",
+        "stdbool.h": "c"
     }
 }
