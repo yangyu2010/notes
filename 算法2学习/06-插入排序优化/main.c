@@ -13,28 +13,28 @@
     end = 8;
     mid = (begin + end) >> 1 = 4;
     array[mid] = 3;
-    Value < array[mid]; 
-    //如果要插入的值(Value)小于中间位置的值, 去左边,begin不变, end=mid 
-    
-第二次查找 
-    begin = 0; 
-    end = mid = 4; 
-    mid = 2; 
-    array[mid] = 2; 
-    Value >= array[mid]; 
-    //如果要插入的值(Value)大于中间位置的值, 去右边,begin=mid+1, end不变 
+    Value < array[mid];
+    //如果要插入的值(Value)小于中间位置的值, 去左边,begin不变, end=mid
 
-第三次查找 
+第二次查找
+    begin = 0;
+    end = mid = 4;
+    mid = 2;
+    array[mid] = 2;
+    Value >= array[mid];
+    //如果要插入的值(Value)大于中间位置的值, 去右边,begin=mid+1, end不变
+
+第三次查找
     begin = min + 1 = 3;
-    end = 4; 
+    end = 4;
     mid = 3;
     array[mid] = 2;
-    Value >= array[mid]; 
-    //如果要插入的值(Value)大于中间位置的值, 去右边, begin=mid+1, end不变 
+    Value >= array[mid];
+    //如果要插入的值(Value)大于中间位置的值, 去右边, begin=mid+1, end不变
 
-准备第四次查找 
-    begin = min + 1 = 4; 
-    end = 4; 
+准备第四次查找
+    begin = min + 1 = 4;
+    end = 4;
     break;
 */
 int indexOf(int *array, int size, int value) {
@@ -42,6 +42,8 @@ int indexOf(int *array, int size, int value) {
         return -1;
     }
 
+    // [begin, end)
+    // 左闭右开的区间 所以end=size;
     int begin = 0;
     int end = size;
 
@@ -52,27 +54,21 @@ int indexOf(int *array, int size, int value) {
         } else {
             begin = mid + 1;
         }
-
-        // if (array[mid] > value) {
-        //     // end = mid - 1;
-        //     // 不能是mid-1
-        //     // [begin, end)
-        //     // 开始是开区间 结束是闭区间
-        //     end = mid;
-        // } else if (array[mid] < value) {
-        //     begin = mid + 1;
-        // } else {
-        //     return mid;
-        // }
     }
 
     return begin;
 }
 
-
 int main() {
-    int array_datas[] = {1, 1, 1, 4, 6, 8, 9, 12, 26, 37, 44, 54, 71};
-    // 0 1 2 2 3 3 3 4 5
+    // int array_datas[] = {2, 1, 10, 21, 19, 6, 5, 12, 9};
+    // int array_datas[] = {4, 6, 8, 9, 0, 1, 12, 26, 37, 44, 54, 71};
+    int array_datas[] = {4, 6, 6, 6, 8, 8, 9, 0, 1, 12, 26, 37, 44, 54, 71};
+    // int array_datas[] = {13, 76, 22, 56, 78, 26, 91, 59, 33, 62, 63, 93, 68,
+    // 39, 65, 86, 41, 88, 20}; int array_datas[] = {13, 76, 22, 56, 78, 26};
+
+    // {2, 1, 10, 21, 19, 6, 5, 12, 9};
+    // {1, 10, 2, 21, 19, 6, 5, 12, 9};
+    // 0   1   2
     int arraySize = sizeof(array_datas);
     int intSize = sizeof(array_datas[0]);
     int length = arraySize / intSize;
@@ -82,13 +78,29 @@ int main() {
         array[i] = array_datas[i];
     }
 
-    printf("%d\n", indexOf(array, length, 90));
+    for (int i = 1; i < length; i++) {
+        int value = array[i];
+        int index = indexOf(array, i, value);
+
+        for (int j = i; j > index; j--) {
+            array[j] = array[j - 1];
+        }
+
+        // for (int j = index; j < i; j++) {
+        //     array[j + 1] = array[j];
+        // }
+
+        array[index] = value;
+    }
+
+    for (int i = 0; i < length; i++) {
+        printf("%d,", array[i]);
+    }
 
     free(array);
 
     return 0;
 }
-
 
 int main1() {
     int size = 9;
