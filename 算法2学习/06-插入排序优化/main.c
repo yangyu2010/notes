@@ -82,6 +82,7 @@ int main() {
         int value = array[i];
         int index = indexOf(array, i, value);
 
+        // 把index到i这个位置的元素往后移动一个单位
         for (int j = i; j > index; j--) {
             array[j] = array[j - 1];
         }
