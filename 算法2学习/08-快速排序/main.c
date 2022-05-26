@@ -5,11 +5,22 @@
 void sort(int *, int, int);
 int pivotIndex(int *, int, int);
 
+int main1() {
+    int i;
+    /* It returns the same sequence of random number
+    on every execution of the program. */
+    printf(" Random Numbers are: \n");
+    for (i = 0; i < 50; i++) {
+        printf(" %d", rand() % 9);
+    }
+    return 0;
+}
+
 int main() {
 
-    // int array_datas[] = {6, 2, 1, 10, 21, 19, 5, 12, 9};
+    int array_datas[] = {6, 2, 1, 10, 21, 19, 5, 12, 9};
     // int array_datas[] = {4, 6, 8, 9, 0, 1, 12, 26, 37, 44, 54, 71};
-    int array_datas[] = {4, 6, 6, 6, 8, 8, 9, 0, 1, 12, 26, 37, 44, 54, 71};
+    // int array_datas[] = {4, 6, 6, 6, 8, 8, 9, 0, 1, 12, 26, 37, 44, 54, 71};
     // int array_datas[] = {13, 13, 20, 76, 22, 56, 78, 26, 91, 59, 33, 62,
     //                      63, 93, 68, 39, 65, 86, 41, 88, 20, 91, 93};
     // int array_datas[] = {13, 76, 22, 56, 78, 26};
@@ -44,6 +55,7 @@ int main() {
 }
 
 void sort(int *array, int begin, int end) {
+    // 当小于两个元素 就直接返回
     if (end - begin < 2) {
         return;
     }
@@ -54,6 +66,14 @@ void sort(int *array, int begin, int end) {
 }
 
 int pivotIndex(int *array, int begin, int end) {
+    // 选择[begin, end)中一个随机位置来当作轴点
+    // 加入这个交互逻辑 其他逻辑不变
+    // 之前是取第一个当做轴点
+    int swapIndex = begin + rand() % (end - begin);
+    int temp = array[swapIndex];
+    array[swapIndex] = array[begin];
+    array[begin] = temp;
+
     int pivot_value = array[begin];
     end--;
 

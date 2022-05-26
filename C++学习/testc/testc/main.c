@@ -57,7 +57,7 @@ char *upper(char *str)
     return dest;
 }
 
-int main(int argc, const char *argv[])
+int main2(int argc, const char *argv[])
 {
 
     // 定义一个字符串变量
@@ -132,3 +132,5 @@ int main(int argc, const char *argv[])
 
     return 0;
 }
+
+
