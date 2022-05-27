@@ -2,13 +2,13 @@
 #include <stdio.h>
 #include <stdlib.h> // pulls in declaration of malloc, free
 #include <string.h> // pulls in declaration for strlen.
-
+#include <time.h>
 /*
  创建一个堆
  */
 
 typedef struct _heap {
-    int *array;    //指向存放堆对数组
+    int *array;   //指向存放堆对数组
     int capacity; //堆的大小
     int size;     //堆目前的元素
 } heap;
@@ -174,26 +174,47 @@ void removelement(heap *h) {
     siftDown(h, 0);
 }
 
+/**
+The sorting used 6.061000 ms by clock()
+The sorting used 0.000000 s by time()
+ */
 int main() {
-    heap *h = createHeap(100);
+    // heap *h = createHeap(100);
+    // int *array = h->array;
+    // // int arr[] = {2, 1, 10, 21, 19, 6, 5, 12, 9};
+    // int arr[] = {13, 76, 22, 56, 78, 26, 91, 59, 33, 62,
+    //              63, 93, 68, 39, 65, 86, 41, 88, 20};
+    // int length = (sizeof(arr) / sizeof(int));
+    // for (int i = 0; i < length; i++) {
+    //     h->size++;
+    //     array[i] = arr[i];
+    // }
+    // for (int i = 0; i < length; i++) {
+    //     printf("%d,", array[i]);
+    // }
+
+    int length = 30000;
+    heap *h = createHeap(length);
     int *array = h->array;
-
-    //int arr[] = {2, 1, 10, 21, 19, 6, 5, 12, 9};
-    int arr[] = {13, 76, 22, 56, 78, 26, 91, 59, 33, 62, 
-                  63, 93, 68, 39, 65, 86, 41, 88, 20};
-
-    int length = (sizeof(arr) / sizeof(int));
-
+    int *arr = (int *)calloc(length, sizeof(int));
+    for (int i = 0; i < length; i++) {
+        arr[i] = random() % 10000;
+    }
     for (int i = 0; i < length; i++) {
         h->size++;
         array[i] = arr[i];
     }
+    for (int i = 0; i < length; i++) {
+        printf("%d,", array[i]);
+    }
+
+    time_t c_start, t_start, c_end, t_end;
+    c_start = clock();    //!< 单位为ms
+    t_start = time(NULL); //!< 单位为s
 
     for (int i = length / 2 - 1; i >= 0; i--) {
         siftDown(h, i);
     }
-
-    dump(h);
 
     while (h->size > 1) {
         int temp = array[0];
@@ -203,15 +224,23 @@ int main() {
 
         h->size -= 1;
         siftDown(h, 0);
-
-        //dump(h);
     }
 
-    //dump(h);
+    c_end = clock();
+    t_end = time(NULL);
+    printf("\nThe sorting used %f ms by clock()\n",
+           difftime(c_end, c_start) / CLOCKS_PER_SEC * 1000);
+    printf("The sorting used %f s by time()\n", difftime(t_end, t_start));
 
-    for (int i = 0; i < length; i++) {
-        printf("%d,", array[i]);
+    int prev = array[0];
+    for (int i = 1; i < length; i++) {
+        if (array[i] < prev) {
+            printf("\n========👎👎👎👎 not ascending order=============\n");
+            return 0;
+        }
+        prev = array[i];
     }
+    printf("\n========yes 👍👍👍👍👍 ascending order=============\n");
 
     return 0;
 }

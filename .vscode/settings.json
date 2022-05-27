@@ -19,6 +19,11 @@
         "__bit_reference": "c",
         "algorithm": "c",
         "__tuple": "c",
-        "stdbool.h": "c"
+        "stdbool.h": "c",
+        "ctime": "c",
+        "__locale": "c",
+        "__string": "c",
+        "time.h": "c",
+        "stdlib.h": "c"
     }
 }
