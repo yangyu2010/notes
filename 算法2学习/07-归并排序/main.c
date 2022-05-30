@@ -32,10 +32,10 @@ int main() {
     //     array[i] = array_datas[i];
     // }
 
-        int length = 100000;
+    int length = 100000;
     int *array = (int *)calloc(length, sizeof(int));
     for (int i = 0; i < length; i++) {
-        array[i] = random() % 100000;
+        array[i] = random() % 10000;
     }
     for (int i = 0; i < length; i++) {
         printf("%d,", array[i]);
@@ -49,7 +49,7 @@ int main() {
 
     c_end = clock();
     t_end = time(NULL);
-    printf("\nThe sorting used %f ms by clock()\n",
+    printf("\n\nThe sorting used %f ms by clock()\n",
            difftime(c_end, c_start) / CLOCKS_PER_SEC * 1000);
     printf("The sorting used %f s by time()\n", difftime(t_end, t_start));
 

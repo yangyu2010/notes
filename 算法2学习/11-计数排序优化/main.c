@@ -7,8 +7,7 @@ int main() {
     // int array_datas[] = {6, 2, 1, 10, 21, 19, 5, 12, 9};
     // int array_datas[] = {4, 6, 8, 9, 0, 1, 12, 26, 37, 44, 54, 71};
     // int array_datas[] = {4, 6, 6, 6, 8, 8, 9, 0, 1, 12, 26, 37, 44, 54, 71,
-    // 99};
-    // int array_datas[] = {13, 13, 20, 76, 22, 56, 78, 26, 91, 59, 33, 62,
+    // 99}; int array_datas[] = {13, 13, 20, 76, 22, 56, 78, 26, 91, 59, 33, 62,
     //                      63, 93, 68, 39, 65, 86, 41, 88, 20, 91, 93};
     // int array_datas[] = {13, 76, 22, 56, 78, 26};
 
@@ -36,6 +35,41 @@ int main() {
     }
     printf("\n排序之前的数组\n\n");
 
+    //===================================================
+    // 1.找最大小值
+    int max = array[0];
+    int min = array[0];
+    for (int i = 0; i < length; i++) {
+        if (array[i] > max) {
+            max = array[i];
+        }
+        if (array[i] < min) {
+            min = array[i];
+        }
+    }
+    int countSize = max - min + 1;
+    // 2.创建 Count Array
+    // 里面存储的是每个元素出现的次数
+    int *countArray = (int *)calloc(countSize, sizeof(int));
+    for (int i = 0; i < length; i++) {
+        int item = array[i];
+        countArray[item - min] += 1;
+    }
+    for (int i = 1; i < countSize; i++) {
+        countArray[i] += countArray[i - 1];
+    }
+
+    int *newArray = (int *)calloc(length, sizeof(int));
+    for (int i = length - 1; i >= 0; i--) {
+        int index = --countArray[(array[i] - min)];
+        newArray[index] = array[i];
+    }
+
+    for (int i = 0; i < length; i++) {
+        array[i] = newArray[i];
+    }
+    //===================================================
+
     printf("\n排序之后的数组\n");
     int prev = array[0];
     printf("%d,", array[0]);
@@ -48,6 +82,10 @@ int main() {
         prev = array[i];
     }
     printf("\n排序之后的数组\n\n");
+
+    free(array);
+    free(countArray);
+    free(newArray);
 
     return 0;
 }

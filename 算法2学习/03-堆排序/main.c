@@ -193,7 +193,7 @@ int main() {
     //     printf("%d,", array[i]);
     // }
 
-    int length = 30000;
+    int length = 100000;
     heap *h = createHeap(length);
     int *array = h->array;
     int *arr = (int *)calloc(length, sizeof(int));

@@ -8,8 +8,8 @@ int *getStepSequence(int *, int, int);
 void sort(int *, int, int);
 
 /**
-The sorting used 6.859000 ms by clock()
-The sorting used 0.000000 s by time()
+The sorting used 24.870000 ms by clock()
+The sorting used 1.000000 s by time()
  */
 int main() {
 
@@ -34,7 +34,7 @@ int main() {
     // int intSize = sizeof(array_datas[0]);
     // int length = arraySize / intSize;
 
-    int length = 30000;
+    int length = 100000;
     int *array = (int *)calloc(length, sizeof(int));
     for (int i = 0; i < length; i++) {
         array[i] = random() % 10000;

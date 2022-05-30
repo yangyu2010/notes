@@ -53,9 +53,9 @@ int main() {
         countArray[item] += 1;
     }
 
-    for (int i = 0; i < max + 1; i++) {
-        printf("%d,", countArray[i]);
-    }
+    // for (int i = 0; i < max + 1; i++) {
+    //     printf("%d,", countArray[i]);
+    // }
 
     // 3.遍历 Count Array
     // 如果存储的值大于0 代表这个下标有值
@@ -73,18 +73,17 @@ int main() {
         }
     }
 
-    printf("\n排序之后的数组\n");
     int prev = array[0];
-    printf("%d,", array[0]);
     for (int i = 1; i < length; i++) {
-        printf("%d,", array[i]);
         if (array[i] < prev) {
-            printf("\n========not ascending order=============\n");
+            printf("\n========👎👎👎👎 not ascending order=============\n");
             break;
         }
         prev = array[i];
     }
-    printf("\n排序之后的数组\n\n");
+    printf("\n========yes 👍👍👍👍👍 ascending order=============\n");
+
+    free(array);
 
     return 0;
 }
