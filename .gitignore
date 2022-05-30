@@ -5,13 +5,20 @@
 # ._*
 # ~$*
 # # Pods
+# Ignore all 忽略所有文件
+*
 
-*.dSYM
-main
+# Unignore files with specific extensions 设置你不想忽略的文件
+!*.cpp
+!*.c
+!*.txt
+!*.md
+!*.asm
+!*.md
+!*.xlsx
+!*.jpg
+!*.gif
 
-.DS_Store
-xcuserdata
-.svn
-*.svn-base
-._*
-~$*
+
+# Unignore all dirs
+!*/
