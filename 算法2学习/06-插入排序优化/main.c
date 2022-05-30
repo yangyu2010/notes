@@ -96,6 +96,7 @@ int main() {
     c_start = clock();    //!< 单位为ms
     t_start = time(NULL); //!< 单位为s
 
+    //================上面是准备数据代码 下面才是真正排序的代码================
     for (int i = 1; i < length; i++) {
         int value = array[i];
         int index = indexOf(array, i, value);
@@ -111,6 +112,7 @@ int main() {
 
         array[index] = value;
     }
+    //======下面是估算排序时间和验证排序的准确性,上面才是真正排序的代码=========
 
     c_end = clock();
     t_end = time(NULL);

@@ -175,7 +175,7 @@ void removelement(heap *h) {
 }
 
 /**
-The sorting used 6.061000 ms by clock()
+The sorting used 20.546000 ms by clock()
 The sorting used 0.000000 s by time()
  */
 int main() {
@@ -212,10 +212,10 @@ int main() {
     c_start = clock();    //!< 单位为ms
     t_start = time(NULL); //!< 单位为s
 
+    //================上面是准备数据代码 下面才是真正排序的代码================
     for (int i = length / 2 - 1; i >= 0; i--) {
         siftDown(h, i);
     }
-
     while (h->size > 1) {
         int temp = array[0];
         // array[0] = array[--length];
@@ -225,6 +225,7 @@ int main() {
         h->size -= 1;
         siftDown(h, 0);
     }
+    //======下面是估算排序时间和验证排序的准确性,上面才是真正排序的代码=========
 
     c_end = clock();
     t_end = time(NULL);
@@ -241,6 +242,8 @@ int main() {
         prev = array[i];
     }
     printf("\n========yes 👍👍👍👍👍 ascending order=============\n");
+
+    free(array);
 
     return 0;
 }

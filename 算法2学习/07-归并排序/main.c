@@ -44,8 +44,10 @@ int main() {
     c_start = clock();    //!< 单位为ms
     t_start = time(NULL); //!< 单位为s
 
+    //================上面是准备数据代码 下面才是真正排序的代码================
     leftArray = (int *)calloc(length, sizeof(int) << 1);
     sort(array, 0, length);
+    //======下面是估算排序时间和验证排序的准确性,上面才是真正排序的代码=========
 
     c_end = clock();
     t_end = time(NULL);
@@ -63,9 +65,9 @@ int main() {
     }
     printf("\n========yes 👍👍👍👍👍 ascending order=============\n");
 
-
     free(array);
     free(leftArray);
+    
     return 0;
 }
 

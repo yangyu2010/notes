@@ -9,8 +9,8 @@
 #define FALSE 0
 
 /**
-The sorting used 2247.965000 ms by clock()
-The sorting used 2.000000 s by time()
+The sorting used 22920.055000 ms by clock()
+The sorting used 23.000000 s by time()
 */
 // 记录下最后一次交换的位置
 int main() {
@@ -21,7 +21,7 @@ int main() {
     // int intSize = sizeof(array[0]);
     // int length = arraySize / intSize;
 
-    int length = 30000;
+    int length = 100000;
     int *array = (int *)calloc(length, sizeof(int));
     for (int i = 0; i < length; i++) {
         array[i] = random() % 10000;
@@ -33,6 +33,7 @@ int main() {
     c_start = clock();    //!< 单位为ms
     t_start = time(NULL); //!< 单位为s
 
+    //================上面是准备数据代码 下面才是真正排序的代码================
     for (int i = length; i > 0; i--) {
         int sortedIndex = 0;
         for (int j = 1; j < i; j++) {
@@ -46,6 +47,7 @@ int main() {
         }
         i = sortedIndex;
     }
+    //======下面是估算排序时间和验证排序的准确性,上面才是真正排序的代码=========
 
     c_end = clock();
     t_end = time(NULL);
@@ -63,15 +65,17 @@ int main() {
     }
     printf("\n========yes 👍👍👍👍👍 ascending order=============\n");
 
+    free(array);
+
     return 0;
 }
 
 /**
-The sorting used 1998.186000 ms by clock()
-The sorting used 2.000000 s by time()
+The sorting used 22506.400000 ms by clock()
+The sorting used 23.000000 s by time()
  */
 // 冒泡排序(有序后提前退出)
-int main2() {
+int main1() {
 
     // int array[] = {1, 4, 6, 0, 71, 12, 9, 8, 26, 37, 44, 54};
     // int array[] = {0, 1, 4, 6, 8, 9, 12, 26, 37, 44, 54, 71};
@@ -79,7 +83,7 @@ int main2() {
     // int intSize = sizeof(array[0]);
     // int length = arraySize / intSize;
 
-    int length = 30000;
+    int length = 100000;
     int *array = (int *)calloc(length, sizeof(int));
     for (int i = 0; i < length; i++) {
         array[i] = random() % 10000;
@@ -91,6 +95,7 @@ int main2() {
     c_start = clock();    //!< 单位为ms
     t_start = time(NULL); //!< 单位为s
 
+    //================上面是准备数据代码 下面才是真正排序的代码================
     for (int i = length; i > 0; i--) {
         BOOL sorted = TRUE;
         for (int j = 1; j < i; j++) {
@@ -107,6 +112,7 @@ int main2() {
             break;
         }
     }
+    //======下面是估算排序时间和验证排序的准确性,上面才是真正排序的代码=========
 
     c_end = clock();
     t_end = time(NULL);
@@ -124,22 +130,24 @@ int main2() {
     }
     printf("\n========yes 👍👍👍👍👍 ascending order=============\n");
 
+    free(array);
+
     return 0;
 }
 
 /**
-The sorting used 1931.196000 ms by clock()
-The sorting used 2.000000 s by time()
+The sorting used 21779.924000 ms by clock()
+The sorting used 22.000000 s by time()
  */
 // 基础的冒泡排序
-int main1() {
+int main222() {
 
     // int array[] = {71, 12, 9, 8, 26, 37, 44, 54};
     // int arraySize = sizeof(array);
     // int intSize = sizeof(array[0]);
     // int length = arraySize / intSize;
 
-    int length = 30000;
+    int length = 100000;
     int *array = (int *)calloc(length, sizeof(int));
     for (int i = 0; i < length; i++) {
         array[i] = random() % 10000;
@@ -151,6 +159,7 @@ int main1() {
     c_start = clock();    //!< 单位为ms
     t_start = time(NULL); //!< 单位为s
 
+    //================上面是准备数据代码 下面才是真正排序的代码================
     for (int i = length; i > 0; i--) {
         for (int j = 1; j < i; j++) {
             if (array[j - 1] > array[j]) {
@@ -160,6 +169,7 @@ int main1() {
             }
         }
     }
+    //======下面是估算排序时间和验证排序的准确性,上面才是真正排序的代码=========
 
     c_end = clock();
     t_end = time(NULL);
@@ -176,6 +186,8 @@ int main1() {
         prev = array[i];
     }
     printf("\n========yes 👍👍👍👍👍 ascending order=============\n");
+
+    free(array);
 
     return 0;
 }

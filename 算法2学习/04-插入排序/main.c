@@ -4,8 +4,8 @@
 #include <time.h>
 
 /**
-The sorting used 472.976000 ms by clock()
-The sorting used 0.000000 s by time()
+The sorting used 4947.212000 ms by clock()
+The sorting used 5.000000 s by time()
 */
 int main() {
     // int array[] = {12, 4, 6, 8, 12, 9, 0, 1};
@@ -15,7 +15,7 @@ int main() {
     // int intSize = sizeof(array[0]);
     // int length = arraySize / intSize;
 
-    int length = 30000;
+    int length = 100000;
     int *array = (int *)calloc(length, sizeof(int));
     for (int i = 0; i < length; i++) {
         array[i] = random() % 10000;
@@ -27,6 +27,7 @@ int main() {
     c_start = clock();    //!< 单位为ms
     t_start = time(NULL); //!< 单位为s
 
+    //================上面是准备数据代码 下面才是真正排序的代码================
     // 从1位置开始比较前一位
     // 如果小于 就交互
     for (int i = 1; i < length; i++) {
@@ -45,6 +46,7 @@ int main() {
 
         array[index] = value;
     }
+    //======下面是估算排序时间和验证排序的准确性,上面才是真正排序的代码=========
 
     c_end = clock();
     t_end = time(NULL);
@@ -61,6 +63,8 @@ int main() {
         prev = array[i];
     }
     printf("\n========yes 👍👍👍👍👍 ascending order=============\n");
+
+    free(array);
 
     return 0;
 }

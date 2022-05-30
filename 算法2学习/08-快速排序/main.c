@@ -17,6 +17,10 @@ int main1() {
     return 0;
 }
 
+/*
+The sorting used 10.754000 ms by clock()
+The sorting used 0.000000 s by time()
+*/
 int main() {
 
     // int array_datas[] = {6, 2, 1, 10, 21, 19, 5, 12, 9};
@@ -55,9 +59,9 @@ int main() {
     c_start = clock();    //!< 单位为ms
     t_start = time(NULL); //!< 单位为s
 
+    //================上面是准备数据代码 下面才是真正排序的代码================
     sort(array, 0, length);
-
-    printf("\n");
+    //======下面是估算排序时间和验证排序的准确性,上面才是真正排序的代码=========
 
     c_end = clock();
     t_end = time(NULL);
