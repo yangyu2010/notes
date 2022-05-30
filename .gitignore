@@ -6,5 +6,12 @@
 # ~$*
 # # Pods
 
-.dSYM
+*.dSYM
 main
+
+.DS_Store
+xcuserdata
+.svn
+*.svn-base
+._*
+~$*
