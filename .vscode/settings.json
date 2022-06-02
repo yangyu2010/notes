@@ -24,6 +24,7 @@
         "__locale": "c",
         "__string": "c",
         "time.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "assert.h": "c"
     }
 }

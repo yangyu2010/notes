@@ -1,3 +1,4 @@
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8,6 +9,9 @@
 Quick Union
 查找 O(logn)
 合并 O(logn)
+
+The sorting used 11413.542000 ms by clock()
+The sorting used 11.000000 s by time()
 */
 struct FindUnion {
     int *parents;
@@ -22,7 +26,7 @@ int find(struct FindUnion *fu, int v) {
     if (v < 0 || v >= fu->capacity) {
         return -1;
     }
-    
+
     while (fu->parents[v] != v) {
         v = fu->parents[v];
     }
@@ -74,7 +78,7 @@ void FindUnion(struct FindUnion *fu, int capacity) {
 /* struct FindUnion 的析构函数 */
 void _FindUnion(struct FindUnion *fu) { free(fu->parents); }
 
-int main() {
+void testFindUnion1() {
     struct FindUnion findUnion;
     FindUnion(&findUnion, 12);
 
@@ -92,49 +96,81 @@ int main() {
     findUnion.union2(&findUnion, 9, 10);
     findUnion.union2(&findUnion, 9, 11);
 
-    printf("%d", findUnion.isSame(&findUnion, 0, 1) == 1);
-    printf("%d", findUnion.isSame(&findUnion, 0, 6) == 0);
-    printf("%d", findUnion.isSame(&findUnion, 0, 7) == 0);
-    printf("%d", findUnion.isSame(&findUnion, 1, 7) == 0);
-    printf("%d", findUnion.isSame(&findUnion, 2, 7) == 0);
-    printf("%d", findUnion.isSame(&findUnion, 3, 7) == 0);
-    printf("%d", findUnion.isSame(&findUnion, 4, 7) == 0);
-    printf("%d", findUnion.isSame(&findUnion, 5, 7) == 0);
-    printf("%d", findUnion.isSame(&findUnion, 6, 7) == 1);
-    printf("%d", findUnion.isSame(&findUnion, 8, 9) == 1);
-    printf("%d", findUnion.isSame(&findUnion, 9, 10) == 1);
-    printf("%d", findUnion.isSame(&findUnion, 11, 10) == 1);
-    printf("%d", findUnion.isSame(&findUnion, 8, 11) == 1);
-    printf("%d", findUnion.isSame(&findUnion, 6, 8) == 0);
-    printf("%d", findUnion.isSame(&findUnion, 6, 9) == 0);
-    printf("%d", findUnion.isSame(&findUnion, 6, 10) == 0);
-    printf("%d", findUnion.isSame(&findUnion, 6, 11) == 0);
+    assert(findUnion.isSame(&findUnion, 0, 1) == 1);
+    assert(findUnion.isSame(&findUnion, 0, 6) == 0);
+    assert(findUnion.isSame(&findUnion, 0, 7) == 0);
+    assert(findUnion.isSame(&findUnion, 1, 7) == 0);
+    assert(findUnion.isSame(&findUnion, 2, 7) == 0);
+    assert(findUnion.isSame(&findUnion, 3, 7) == 0);
+    assert(findUnion.isSame(&findUnion, 4, 7) == 0);
+    assert(findUnion.isSame(&findUnion, 5, 7) == 0);
+    assert(findUnion.isSame(&findUnion, 6, 7) == 1);
+    assert(findUnion.isSame(&findUnion, 8, 9) == 1);
+    assert(findUnion.isSame(&findUnion, 9, 10) == 1);
+    assert(findUnion.isSame(&findUnion, 11, 10) == 1);
+    assert(findUnion.isSame(&findUnion, 8, 11) == 1);
+    assert(findUnion.isSame(&findUnion, 6, 8) == 0);
+    assert(findUnion.isSame(&findUnion, 6, 9) == 0);
+    assert(findUnion.isSame(&findUnion, 6, 10) == 0);
+    assert(findUnion.isSame(&findUnion, 6, 11) == 0);
 
     findUnion.union2(&findUnion, 1, 6);
 
-    printf("%d", findUnion.isSame(&findUnion, 0, 6) == 1);
-    printf("%d", findUnion.isSame(&findUnion, 0, 7) == 1);
-    printf("%d", findUnion.isSame(&findUnion, 1, 7) == 1);
-    printf("%d", findUnion.isSame(&findUnion, 2, 7) == 1);
-    printf("%d", findUnion.isSame(&findUnion, 3, 7) == 1);
-    printf("%d", findUnion.isSame(&findUnion, 4, 7) == 1);
-    printf("%d", findUnion.isSame(&findUnion, 5, 7) == 1);
+    assert(findUnion.isSame(&findUnion, 0, 6) == 1);
+    assert(findUnion.isSame(&findUnion, 0, 7) == 1);
+    assert(findUnion.isSame(&findUnion, 1, 7) == 1);
+    assert(findUnion.isSame(&findUnion, 2, 7) == 1);
+    assert(findUnion.isSame(&findUnion, 3, 7) == 1);
+    assert(findUnion.isSame(&findUnion, 4, 7) == 1);
+    assert(findUnion.isSame(&findUnion, 5, 7) == 1);
 
     findUnion.union2(&findUnion, 7, 8);
 
-    printf("%d", findUnion.isSame(&findUnion, 6, 8) == 1);
-    printf("%d", findUnion.isSame(&findUnion, 6, 9) == 1);
-    printf("%d", findUnion.isSame(&findUnion, 6, 10) == 1);
-    printf("%d", findUnion.isSame(&findUnion, 6, 11) == 1);
+    assert(findUnion.isSame(&findUnion, 6, 8) == 1);
+    assert(findUnion.isSame(&findUnion, 6, 9) == 1);
+    assert(findUnion.isSame(&findUnion, 6, 10) == 1);
+    assert(findUnion.isSame(&findUnion, 6, 11) == 1);
 
-    printf("%d", findUnion.isSame(&findUnion, 0, 8) == 1);
-    printf("%d", findUnion.isSame(&findUnion, 0, 9) == 1);
-    printf("%d", findUnion.isSame(&findUnion, 1, 10) == 1);
-    printf("%d", findUnion.isSame(&findUnion, 2, 11) == 1);
-    printf("%d", findUnion.isSame(&findUnion, 3, 10) == 1);
-    printf("%d", findUnion.isSame(&findUnion, 4, 10) == 1);
-    printf("%d", findUnion.isSame(&findUnion, 5, 11) == 1);
+    assert(findUnion.isSame(&findUnion, 0, 8) == 1);
+    assert(findUnion.isSame(&findUnion, 0, 9) == 1);
+    assert(findUnion.isSame(&findUnion, 1, 10) == 1);
+    assert(findUnion.isSame(&findUnion, 2, 11) == 1);
+    assert(findUnion.isSame(&findUnion, 3, 10) == 1);
+    assert(findUnion.isSame(&findUnion, 4, 10) == 1);
+    assert(findUnion.isSame(&findUnion, 5, 11) == 1);
 
     _FindUnion(&findUnion);
+}
+
+void testFindUnion2() {
+    int size = 100000;
+    struct FindUnion findUnion;
+    FindUnion(&findUnion, size);
+
+    time_t c_start, t_start, c_end, t_end;
+    c_start = clock();    //!< 单位为ms
+    t_start = time(NULL); //!< 单位为s
+
+    for (int i = 0; i < size; i++) {
+        findUnion.union2(&findUnion, random() % size, random() % size);
+    }
+
+    for (int i = 0; i < size; i++) {
+        findUnion.isSame(&findUnion, random() % size, random() % size);
+    }
+
+    c_end = clock();
+    t_end = time(NULL);
+    printf("\nThe sorting used %f ms by clock()\n",
+           difftime(c_end, c_start) / CLOCKS_PER_SEC * 1000);
+    printf("The sorting used %f s by time()\n", difftime(t_end, t_start));
+
+    _FindUnion(&findUnion);
+}
+
+int main() {
+    testFindUnion1();
+    testFindUnion2();
+
     return 0;
 }

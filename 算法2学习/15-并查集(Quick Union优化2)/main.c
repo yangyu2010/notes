@@ -5,17 +5,18 @@
 #include <time.h>
 
 /*
-并查集
-Quick Find
-查找 O(1)
-合并 O(n)
+并查集 基于rank(树高度)的优化
+Quick Union
+查找 O(logn)
+合并 O(logn)
 
-The sorting used 17819.255000 ms by clock()
-The sorting used 18.000000 s by time()
+The sorting used 11.879000 ms by clock()
+The sorting used 0.000000 s by time()
 */
 struct FindUnion {
     int *parents;
     int capacity;
+    int *ranks;
 
     int (*find)(struct FindUnion *, int);
     void (*union2)(struct FindUnion *, int, int);
@@ -26,7 +27,11 @@ int find(struct FindUnion *fu, int v) {
     if (v < 0 || v >= fu->capacity) {
         return -1;
     }
-    return fu->parents[v];
+
+    while (fu->parents[v] != v) {
+        v = fu->parents[v];
+    }
+    return v;
 }
 
 void union2(struct FindUnion *fu, int v1, int v2) {
@@ -35,10 +40,16 @@ void union2(struct FindUnion *fu, int v1, int v2) {
     if (parent1 == parent2) {
         return;
     }
-    for (int i = 0; i < fu->capacity; i++) {
-        if (fu->parents[i] == parent1) {
-            fu->parents[i] = parent2;
-        }
+    // 如果parent1的节点数量大于parent2的节点数量
+    // 就把parent2指向parent1
+    // parent1的size增加
+    if (fu->ranks[parent1] > fu->ranks[parent2]) {
+        fu->parents[parent2] = parent1;
+    } else if (fu->ranks[parent1] < fu->ranks[parent2]) {
+        fu->parents[parent1] = parent2;
+    } else {
+        fu->parents[parent1] = parent2;
+        fu->ranks[parent2] += 1;
     }
 }
 
@@ -63,8 +74,10 @@ void FindUnion(struct FindUnion *fu, int capacity) {
     fu->union2 = union2;
     fu->isSame = isSame;
     fu->parents = (int *)calloc(sizeof(int), capacity);
+    fu->ranks = (int *)calloc(sizeof(int), capacity);
     for (int i = 0; i < capacity; i++) {
         fu->parents[i] = i;
+        fu->ranks[i] = 1;
     }
     return;
 }
@@ -155,7 +168,7 @@ void testFindUnion2() {
 
     c_end = clock();
     t_end = time(NULL);
-    printf("\n\nThe sorting used %f ms by clock()\n",
+    printf("\nThe sorting used %f ms by clock()\n",
            difftime(c_end, c_start) / CLOCKS_PER_SEC * 1000);
     printf("The sorting used %f s by time()\n", difftime(t_end, t_start));
 
