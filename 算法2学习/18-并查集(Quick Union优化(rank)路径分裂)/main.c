@@ -5,17 +5,17 @@
 #include <time.h>
 
 /*
-并查集 基于rank(树高度)的优化 路径压缩 Path Compression
-在Find时 把当前查找链路上所有的节点都指向根节点
+并查集 基于rank(树高度)的优化 路径分裂 Path Spliting
+在Find时 把当前查找链路上所有的节点都指向其祖父节点
 5
 4
 3
 2
 1
-假如要找1的根节点(1->2->3->4->5)
-把这条链路上所有的节点都指向根节点
+假如要找1的根节点(1->3->5)(2->4->5)
+把这条链路上所有的节点都指向其祖父节点
 
-The sorting used 11.049000 ms by clock()
+The sorting used 10.381000 ms by clock()
 The sorting used 0.000000 s by time()
 */
 struct FindUnion {
@@ -39,14 +39,23 @@ int find(struct FindUnion *fu, int v) {
     3
     2
     1
-    假如要找1的根节点(1->2->3->4->5)
-    把这条链路上所有的节点都指向根节点
-    find(fu, fu->parents[v])是找到根节点
+    假如要找1的根节点(1->3->5)(2->4->5)
+    把这条链路上所有的节点都指向其祖父节点
     */
-    if (fu->parents[v] != v) {
-        fu->parents[v] = find(fu, fu->parents[v]);
+
+    while (fu->parents[v] != v) {
+        /**
+         * 1->2->3->4->5
+         * 把1指向3时 要把1的parent也就是2保存下来
+         * 没有这一句 1->3后 2还是指向3
+         * 在后面写 v = fu->parents[v]; 也不行
+         * 因为1的parent已经指向3了
+         */
+        int p = fu->parents[v];
+        fu->parents[v] = fu->parents[fu->parents[v]];
+        v = p;
     }
-    return fu->parents[v];
+    return v;
 }
 
 void union2(struct FindUnion *fu, int v1, int v2) {
