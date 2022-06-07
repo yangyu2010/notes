@@ -16,11 +16,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSInteger)vertexesSize;
 
 - (void)addVertex:(NSString *)vertex;
-- (void)addEdgeFrom:(NSString *)vertex1 to:(NSString *)vertex2;
-- (void)addEdgeFrom:(NSString *)vertex1 to:(NSString *)vertex2 widget:(nullable NSNumber *)weight;
+- (void)addEdgeFrom:(NSString *)from to:(NSString *)to;
+- (void)addEdgeFrom:(NSString *)from to:(NSString *)to widget:(nullable NSNumber *)weight;
 
 - (void)removeVertex:(NSString *)vertex;
-- (void)removeEdgeFrom:(NSString *)vertex1 to:(NSString *)vertex2;
+- (void)removeEdgeFrom:(NSString *)from to:(NSString *)to;
 
 
 @end

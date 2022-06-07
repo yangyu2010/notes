@@ -22,14 +22,18 @@ int main(int argc, const char * argv[]) {
     [graph addEdgeFrom:@"V3" to:@"V4" widget:@10];
     
     [graph removeVertex:@"V3"];
-    [graph removeEdgeFrom:@"V1" to:@"V2"];
-    [graph removeEdgeFrom:@"V1" to:@"V2"];
-    [graph removeEdgeFrom:@"V1" to:@"V3"];
-    [graph removeEdgeFrom:@"V1" to:@"v3"];
+    [graph removeVertex:@"v3"];
+    [graph removeVertex:@"v1"];
+    [graph removeVertex:@"V1"];
+
+//    [graph removeEdgeFrom:@"V1" to:@"V2"];
+//    [graph removeEdgeFrom:@"V1" to:@"V2"];
+//    [graph removeEdgeFrom:@"V1" to:@"V3"];
+//    [graph removeEdgeFrom:@"V1" to:@"v3"];
     
-    [graph removeEdgeFrom:@"V1" to:@"V0"];
-    [graph removeEdgeFrom:@"V2" to:@"V0"];
-    [graph removeEdgeFrom:@"V0" to:@"V4"];
+//    [graph removeEdgeFrom:@"V1" to:@"V0"];
+//    [graph removeEdgeFrom:@"V2" to:@"V0"];
+//    [graph removeEdgeFrom:@"V0" to:@"V4"];
 
 
     [graph debugLog];

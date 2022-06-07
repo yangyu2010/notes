@@ -70,79 +70,78 @@
     [self.vertexes setValue:v forKey:vertex];
 }
 
-- (void)addEdgeFrom:(NSString *)vertex1 to:(NSString *)vertex2 {
-    [self addEdgeFrom:vertex1 to:vertex2 widget:nil];
+- (void)addEdgeFrom:(NSString *)from to:(NSString *)to {
+    [self addEdgeFrom:from to:to widget:nil];
 }
 
-- (void)addEdgeFrom:(NSString *)vertex1 to:(NSString *)vertex2 widget:(nullable NSNumber *)weight {
-    Vertex *v1 = [self.vertexes valueForKey:vertex1];
-    if (v1 == nil || v1 == NULL) {
-        v1 = [[Vertex alloc] init];
-        v1.value = vertex1;
-        [self.vertexes setValue:v1 forKey:vertex1];
+- (void)addEdgeFrom:(NSString *)from to:(NSString *)to widget:(nullable NSNumber *)weight {
+    Vertex *fromVertex = [self.vertexes valueForKey:from];
+    if (fromVertex == nil || fromVertex == NULL) {
+        fromVertex = [[Vertex alloc] init];
+        fromVertex.value = from;
+        [self.vertexes setValue:fromVertex forKey:from];
     }
     
-    Vertex *v2 = [self.vertexes valueForKey:vertex2];
-    if (v2 == nil || v2 == NULL) {
-        v2 = [[Vertex alloc] init];
-        v2.value = vertex2;
-        [self.vertexes setValue:v2 forKey:vertex2];
+    Vertex *toVertex = [self.vertexes valueForKey:to];
+    if (toVertex == nil || toVertex == NULL) {
+        toVertex = [[Vertex alloc] init];
+        toVertex.value = to;
+        [self.vertexes setValue:toVertex forKey:to];
     }
     
     Edge *edge = [[Edge alloc] init];
-    edge.from = v1;
-    edge.to = v2;
+    edge.from = fromVertex;
+    edge.to = toVertex;
     edge.weight = weight;
     
-    [v1.outEdges removeObject:edge];
-    [v2.inEdges removeObject:edge];
+    [fromVertex.outEdges removeObject:edge];
+    [toVertex.inEdges removeObject:edge];
     [self.edges removeObject:edge];
 
-    [v1.outEdges addObject:edge];
-    [v2.inEdges addObject:edge];
+    [fromVertex.outEdges addObject:edge];
+    [toVertex.inEdges addObject:edge];
     [self.edges addObject:edge];
 }
 
 - (void)removeVertex:(NSString *)vertex {
-    for (Vertex *v in self.vertexes.allValues) {
-//        if ([v isKindOfClass:[Vertex class]] == NO) {
-//            continue;
-//        }
-        
-        for (Edge *edge in v.inEdges.allObjects) {
-            if ([edge.to.value isEqualToString:vertex] || [edge.from.value isEqualToString:vertex]) {
-                [v.inEdges removeObject:edge];
-                [self.edges removeObject:edge];
-            }
-        }
-        
-        for (Edge *edge in v.outEdges.allObjects) {
-            if ([edge.to.value isEqualToString:vertex] || [edge.from.value isEqualToString:vertex]) {
-                [v.outEdges removeObject:edge];
-                [self.edges removeObject:edge];
-            }
-        }
+    Vertex *v = [self.vertexes valueForKey:vertex];
+    if (v == nil || v == NULL) {
+        return;
     }
     
+    for (Edge *e in v.outEdges.allObjects) {
+        [e.to.inEdges removeObject:e];
+        [self.edges removeObject:e];
+    }
+    [v.outEdges removeAllObjects];
+    
+    for (Edge *e in v.inEdges.allObjects) {
+        [e.from.outEdges removeObject:e];
+        [self.edges removeObject:e];
+    }
+    [v.inEdges removeAllObjects];
     [self.vertexes removeObjectForKey:vertex];
+    
 }
 
 - (void)removeEdgeFrom:(NSString *)from to:(NSString *)to {
-    for (Vertex *v in self.vertexes.allValues) {
-        for (Edge *edge in v.inEdges.allObjects) {
-            if ([edge.to.value isEqualToString:to] && [edge.from.value isEqualToString:from]) {
-                [v.inEdges removeObject:edge];
-                [self.edges removeObject:edge];
-            }
-        }
-
-        for (Edge *edge in v.outEdges.allObjects) {
-            if ([edge.to.value isEqualToString:to] && [edge.from.value isEqualToString:from]) {
-                [v.outEdges removeObject:edge];
-                [self.edges removeObject:edge];
-            }
-        }
+    Vertex *fromVertex = [self.vertexes valueForKey:from];
+    if (fromVertex == nil || fromVertex == NULL) {
+        return;
     }
+    
+    Vertex *toVertex = [self.vertexes valueForKey:to];
+    if (toVertex == nil || toVertex == NULL) {
+        return;
+    }
+    
+    Edge *edge = [[Edge alloc] init];
+    edge.from = fromVertex;
+    edge.to = toVertex;
+    
+    [fromVertex.outEdges removeObject:edge];
+    [toVertex.inEdges removeObject:edge];
+    [self.edges removeObject:edge];
 }
 
 
