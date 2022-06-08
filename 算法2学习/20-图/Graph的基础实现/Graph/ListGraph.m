@@ -31,6 +31,7 @@
 - (void)debugLog {
     NSLog(@"edgesSize: %ld", [self edgesSize]);
     NSLog(@"vertexesSize: %ld", [self vertexesSize]);
+    NSLog(@"\n");
     
     for (id value in self.vertexes.allValues) {
         Vertex *vertex = (Vertex *)value;
@@ -142,5 +143,91 @@
     [self.edges removeObject:edge];
 }
 
+- (void)bfs:(NSString *)begin {
+    Vertex *beginVertex = [self.vertexes valueForKey:begin];
+    if (beginVertex == nil) {
+        return;
+    }
+    
+    /// 在iOS中没有队列这种数据结构 我这里用的是普通数组
+    /// 每次移除第一个 在末尾添加新的
+    NSMutableSet<Vertex *> *visitedVertex = [[NSMutableSet alloc] init];
+    NSMutableArray<Vertex *> *array = [[NSMutableArray alloc] init];
+    [array addObject:beginVertex];
+    [visitedVertex addObject:beginVertex];
+    
+    while (array.count > 0) {
+        Vertex *vertex = array.firstObject;
+        NSLog(@"%@", vertex);
+        [array removeObjectAtIndex:0];
+        
+        for (Edge *e in vertex.outEdges) {
+            if ([visitedVertex containsObject:e.to]) {
+                continue;
+            }
+            [array addObject:e.to];
+            [visitedVertex addObject:e.to];
+        }
+    }
+    
+}
+
+/*
+ dfs递归版本
+- (void)dfs:(NSString *)begin {
+    Vertex *beginVertex = [self.vertexes valueForKey:begin];
+    if (beginVertex == nil) {
+        return;
+    }
+
+    NSMutableSet<Vertex *> *visitedVertex = [[NSMutableSet alloc] init];
+    [visitedVertex addObject:beginVertex];
+
+    [self dfsVertex:beginVertex visitedVertex:visitedVertex];
+}
+
+- (void)dfsVertex:(Vertex *)vertex visitedVertex:(NSMutableSet<Vertex *> *)visitedVertex {
+    NSLog(@"%@", vertex);
+    
+    for (Edge *e in vertex.outEdges) {
+        if ([visitedVertex containsObject:e.to]) {
+            continue;
+        }
+        [visitedVertex addObject:e.to];
+        [self dfsVertex:e.to visitedVertex:visitedVertex];
+    }
+}
+*/
+
+- (void)dfs:(NSString *)begin {
+    Vertex *beginVertex = [self.vertexes valueForKey:begin];
+    if (beginVertex == nil) {
+        return;
+    }
+
+    /// 在iOS中没有栈这种数据结构 我这里用的是普通数组
+    /// 先进后出
+    NSMutableSet<Vertex *> *visitedVertex = [[NSMutableSet alloc] init];
+    NSMutableArray<Vertex *> *array = [[NSMutableArray alloc] init];
+    [array addObject:beginVertex];
+    [visitedVertex addObject:beginVertex];
+    NSLog(@"%@", beginVertex);
+
+    while (array.count > 0) {
+        Vertex *vertex = array.lastObject;
+        [array removeLastObject];
+
+        for (Edge *e in vertex.outEdges) {
+            if ([visitedVertex containsObject:e.to]) {
+                continue;
+            }
+            [array addObject:e.from];
+            [array addObject:e.to];
+            [visitedVertex addObject:e.to];
+            NSLog(@"%@", e.to);
+            break;
+        }
+    }
+}
 
 @end

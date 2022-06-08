@@ -22,6 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)removeVertex:(NSString *)vertex;
 - (void)removeEdgeFrom:(NSString *)from to:(NSString *)to;
 
+- (void)bfs:(NSString *)begin;
+- (void)dfs:(NSString *)begin;
 
 @end
 
