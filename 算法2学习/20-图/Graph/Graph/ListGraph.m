@@ -113,15 +113,13 @@
         [e.to.inEdges removeObject:e];
         [self.edges removeObject:e];
     }
-    [v.outEdges removeAllObjects];
     
     for (Edge *e in v.inEdges.allObjects) {
         [e.from.outEdges removeObject:e];
         [self.edges removeObject:e];
     }
-    [v.inEdges removeAllObjects];
+
     [self.vertexes removeObjectForKey:vertex];
-    
 }
 
 - (void)removeEdgeFrom:(NSString *)from to:(NSString *)to {

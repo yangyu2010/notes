@@ -21,10 +21,11 @@ int main(int argc, const char * argv[]) {
     [graph addEdgeFrom:@"V0" to:@"V4" widget:@16];
     [graph addEdgeFrom:@"V3" to:@"V4" widget:@10];
     
-    [graph removeVertex:@"V3"];
-    [graph removeVertex:@"v3"];
-    [graph removeVertex:@"v1"];
-    [graph removeVertex:@"V1"];
+    [graph removeVertex:@"V0"];
+//    [graph removeVertex:@"V3"];
+//    [graph removeVertex:@"v3"];
+//    [graph removeVertex:@"v1"];
+//    [graph removeVertex:@"V1"];
 
 //    [graph removeEdgeFrom:@"V1" to:@"V2"];
 //    [graph removeEdgeFrom:@"V1" to:@"V2"];

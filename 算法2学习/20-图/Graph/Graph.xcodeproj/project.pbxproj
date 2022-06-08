@@ -34,6 +34,7 @@
 		8661E492284F012300772E8F /* Vertex.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Vertex.m; sourceTree = "<group>"; };
 		8661E494284F02E000772E8F /* Edge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Edge.h; sourceTree = "<group>"; };
 		8661E495284F02E000772E8F /* Edge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Edge.m; sourceTree = "<group>"; };
+		866438AC284F5F8F00EDDA26 /* Xnip2022-06-07_18-27-19.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Xnip2022-06-07_18-27-19.jpg"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +67,7 @@
 		8661E486284EF9EE00772E8F /* Graph */ = {
 			isa = PBXGroup;
 			children = (
+				866438AC284F5F8F00EDDA26 /* Xnip2022-06-07_18-27-19.jpg */,
 				8661E487284EF9EE00772E8F /* main.m */,
 				8661E48E284EFAC600772E8F /* ListGraph.h */,
 				8661E48F284EFAC600772E8F /* ListGraph.m */,
