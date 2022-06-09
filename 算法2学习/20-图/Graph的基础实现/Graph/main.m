@@ -184,15 +184,84 @@ void test6() {
     [graph dfs:@"a"];
 }
 
+/// 拓扑排序
+void test7() {
+    ListGraph *graph = [[ListGraph alloc] init];
+    [graph addEdgeFrom:@"V1" to:@"V0" widget:@9];
+    [graph addEdgeFrom:@"V1" to:@"V2" widget:@3];
+    [graph addEdgeFrom:@"V2" to:@"V0" widget:@2];
+    [graph addEdgeFrom:@"V2" to:@"V3" widget:@5];
+    [graph addEdgeFrom:@"V3" to:@"V4" widget:@1];
+    [graph addEdgeFrom:@"V0" to:@"V4" widget:@6];
+    
+    NSArray *array = [graph topologicalSort];
+    NSLog(@"%@", array);
+}
+
+/// 拓扑排序
+void test8() {
+    ListGraph *graph = [[ListGraph alloc] init];
+//
+//    {0, 2},
+//                {1, 0},
+//                {2, 5}, {2, 6},
+//                {3, 1}, {3, 5}, {3, 7},
+//                {5, 7},
+//                {6, 4},
+//                {7, 6}
+  
+    [graph addEdgeFrom:@"0" to:@"2"];
+    
+    [graph addEdgeFrom:@"1" to:@"0"];
+
+    [graph addEdgeFrom:@"2" to:@"5"];
+    [graph addEdgeFrom:@"2" to:@"6"];
+
+    [graph addEdgeFrom:@"3" to:@"1"];
+    [graph addEdgeFrom:@"3" to:@"5"];
+    [graph addEdgeFrom:@"3" to:@"7"];
+    
+    [graph addEdgeFrom:@"5" to:@"7"];
+    [graph addEdgeFrom:@"6" to:@"4"];
+    [graph addEdgeFrom:@"7" to:@"6"];
+
+    NSArray *array = [graph topologicalSort];
+    NSLog(@"%@", array);
+}
+
+/// 拓扑排序
+void test9() {
+    ListGraph *graph = [[ListGraph alloc] init];
+    [graph addEdgeFrom:@"V1" to:@"V2"];
+    [graph addEdgeFrom:@"V1" to:@"V3"];
+    [graph addEdgeFrom:@"V1" to:@"V4"];
+    [graph addEdgeFrom:@"V2" to:@"V5"];
+    [graph addEdgeFrom:@"V3" to:@"V5"];
+    [graph addEdgeFrom:@"V4" to:@"V6"];
+    [graph addEdgeFrom:@"V5" to:@"V7"];
+    [graph addEdgeFrom:@"V5" to:@"V8"];
+    [graph addEdgeFrom:@"V6" to:@"V8"];
+    [graph addEdgeFrom:@"V7" to:@"V9"];
+    [graph addEdgeFrom:@"V8" to:@"V9"];
+    [graph addEdgeFrom:@"V9" to:@"V10"];
+
+    NSArray *array = [graph topologicalSort];
+    NSLog(@"%@", array);
+}
+
+
 int main(int argc, const char * argv[]) {
     
 //    test1();
-    test2();
+//    test2();
 //    test3();
 //    test4();
 //    test5();
-    
 //    test6();
+//    test7();
+//    test8();
+    
+    test9();
     
     return 0;
 }

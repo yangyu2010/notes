@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)bfs:(NSString *)begin;
 - (void)dfs:(NSString *)begin;
+- (NSArray<NSString *> *)topologicalSort;
 
 @end
 

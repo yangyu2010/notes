@@ -230,4 +230,35 @@
     }
 }
 
+- (NSArray<NSString *> *)topologicalSort {
+    NSMutableArray<NSString *> *array = [[NSMutableArray alloc] init];
+    NSMutableArray<Vertex *> *queue = [[NSMutableArray alloc] init];
+    NSMutableDictionary *inDegree = [[NSMutableDictionary alloc] init];
+    
+    for (Vertex *v in self.vertexes.allValues) {
+        NSInteger count = [v.inEdges count];
+        if (count == 0) {
+            [queue addObject:v];
+        } else {
+            [inDegree setValue:[NSNumber numberWithInteger:count] forKey:v.value];
+        }
+    }
+    
+    while (queue.count > 0) {
+        Vertex *v = queue.firstObject;
+        [queue removeObjectAtIndex:0];
+        [array addObject:v.value];
+        
+        for (Edge *e in v.outEdges) {
+            NSInteger count = [[inDegree valueForKey:e.to.value] integerValue] - 1;
+            if (count== 0) {
+                [queue addObject:e.to];
+            }
+            [inDegree setValue:[NSNumber numberWithInteger:count] forKey:e.to.value];
+        }
+    }
+    
+    return array.copy;
+}
+
 @end
