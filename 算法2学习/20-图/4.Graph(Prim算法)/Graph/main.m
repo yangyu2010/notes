@@ -250,6 +250,145 @@ void test9() {
 }
 
 
+/// prim 最小生成树 mst_03.jpg
+void test10() {
+    ListGraph *graph = [[ListGraph alloc] init];
+    [graph addEdgeFrom:@"A" to:@"B" widget:@4];
+    [graph addEdgeFrom:@"B" to:@"A" widget:@4];
+    
+    [graph addEdgeFrom:@"A" to:@"H" widget:@8];
+    [graph addEdgeFrom:@"H" to:@"A" widget:@8];
+    
+    [graph addEdgeFrom:@"B" to:@"H" widget:@11];
+    [graph addEdgeFrom:@"H" to:@"B" widget:@11];
+    
+    [graph addEdgeFrom:@"B" to:@"C" widget:@8];
+    [graph addEdgeFrom:@"C" to:@"B" widget:@8];
+    
+    [graph addEdgeFrom:@"C" to:@"I" widget:@2];
+    [graph addEdgeFrom:@"I" to:@"C" widget:@2];
+
+    [graph addEdgeFrom:@"H" to:@"I" widget:@7];
+    [graph addEdgeFrom:@"I" to:@"H" widget:@7];
+
+    [graph addEdgeFrom:@"G" to:@"I" widget:@6];
+    [graph addEdgeFrom:@"I" to:@"G" widget:@6];
+
+    [graph addEdgeFrom:@"G" to:@"H" widget:@1];
+    [graph addEdgeFrom:@"H" to:@"G" widget:@1];
+
+    [graph addEdgeFrom:@"G" to:@"F" widget:@2];
+    [graph addEdgeFrom:@"F" to:@"G" widget:@2];
+
+    [graph addEdgeFrom:@"C" to:@"D" widget:@7];
+    [graph addEdgeFrom:@"D" to:@"C" widget:@7];
+    
+    [graph addEdgeFrom:@"C" to:@"F" widget:@4];
+    [graph addEdgeFrom:@"F" to:@"C" widget:@4];
+
+    [graph addEdgeFrom:@"D" to:@"F" widget:@14];
+    [graph addEdgeFrom:@"F" to:@"D" widget:@14];
+
+    [graph addEdgeFrom:@"D" to:@"E" widget:@9];
+    [graph addEdgeFrom:@"E" to:@"D" widget:@9];
+
+    [graph addEdgeFrom:@"F" to:@"E" widget:@10];
+    [graph addEdgeFrom:@"E" to:@"F" widget:@10];
+
+    [graph debugLog];
+//        [graph bfs:@"A"];
+//        [graph dfs:@"A"];
+    [graph prim];
+}
+
+
+/// prim 最小生成树  (图mst_01.png)
+void test11() {
+    ListGraph *graph = [[ListGraph alloc] init];
+    [graph addEdgeFrom:@"0" to:@"2" widget:@2];
+    [graph addEdgeFrom:@"2" to:@"0" widget:@2];
+    [graph addEdgeFrom:@"0" to:@"4" widget:@7];
+    [graph addEdgeFrom:@"4" to:@"0" widget:@7];
+
+    [graph addEdgeFrom:@"1" to:@"2" widget:@3];
+    [graph addEdgeFrom:@"2" to:@"1" widget:@3];
+    [graph addEdgeFrom:@"1" to:@"5" widget:@1];
+    [graph addEdgeFrom:@"5" to:@"1" widget:@1];
+    [graph addEdgeFrom:@"1" to:@"6" widget:@7];
+    [graph addEdgeFrom:@"6" to:@"1" widget:@7];
+
+    [graph addEdgeFrom:@"2" to:@"4" widget:@4];
+    [graph addEdgeFrom:@"4" to:@"2" widget:@4];
+    [graph addEdgeFrom:@"2" to:@"5" widget:@3];
+    [graph addEdgeFrom:@"5" to:@"2" widget:@3];
+    [graph addEdgeFrom:@"2" to:@"6" widget:@6];
+    [graph addEdgeFrom:@"6" to:@"2" widget:@6];
+
+    [graph addEdgeFrom:@"3" to:@"7" widget:@9];
+    [graph addEdgeFrom:@"7" to:@"3" widget:@9];
+
+    [graph addEdgeFrom:@"4" to:@"6" widget:@8];
+    [graph addEdgeFrom:@"6" to:@"4" widget:@8];
+
+    [graph addEdgeFrom:@"5" to:@"6" widget:@4];
+    [graph addEdgeFrom:@"6" to:@"5" widget:@4];
+    [graph addEdgeFrom:@"5" to:@"7" widget:@5];
+    [graph addEdgeFrom:@"7" to:@"5" widget:@5];
+
+    /*
+    {0, 2, 2}, {0, 4, 7},
+                {1, 2, 3}, {1, 5, 1}, {1, 6, 7},
+                {2, 4, 4}, {2, 5, 3}, {2, 6, 6},
+                {3, 7, 9},
+                {4, 6, 8},
+                {5, 6, 4}, {5, 7, 5}
+     */
+    
+    [graph debugLog];
+    
+    [graph prim];
+}
+
+
+/// prim 最小生成树  (图mst_02.png)
+void test12() {
+    ListGraph *graph = [[ListGraph alloc] init];
+    [graph addEdgeFrom:@"A" to:@"B" widget:@17];
+    [graph addEdgeFrom:@"B" to:@"A" widget:@17];
+    [graph addEdgeFrom:@"A" to:@"F" widget:@1];
+    [graph addEdgeFrom:@"F" to:@"A" widget:@1];
+    [graph addEdgeFrom:@"A" to:@"E" widget:@16];
+    [graph addEdgeFrom:@"E" to:@"A" widget:@16];
+
+    [graph addEdgeFrom:@"B" to:@"C" widget:@6];
+    [graph addEdgeFrom:@"C" to:@"B" widget:@6];
+    [graph addEdgeFrom:@"B" to:@"D" widget:@5];
+    [graph addEdgeFrom:@"D" to:@"B" widget:@5];
+    [graph addEdgeFrom:@"B" to:@"F" widget:@11];
+    [graph addEdgeFrom:@"F" to:@"B" widget:@11];
+
+    [graph addEdgeFrom:@"D" to:@"C" widget:@10];
+    [graph addEdgeFrom:@"C" to:@"D" widget:@10];
+
+    [graph addEdgeFrom:@"D" to:@"E" widget:@4];
+    [graph addEdgeFrom:@"E" to:@"D" widget:@4];
+    [graph addEdgeFrom:@"D" to:@"F" widget:@14];
+    [graph addEdgeFrom:@"F" to:@"D" widget:@14];
+
+    [graph addEdgeFrom:@"E" to:@"F" widget:@33];
+    [graph addEdgeFrom:@"F" to:@"E" widget:@33];
+    
+    [graph debugLog];
+    
+    [graph prim];
+    
+//    {"A", "B", 17}, {"A", "F", 1}, {"A", "E", 16},
+//    {"B", "C", 6}, {"B", "D", 5}, {"B", "F", 11},
+//    {"C", "D", 10},
+//    {"D", "E", 4}, {"D", "F", 14},
+//    {"E", "F", 33}
+}
+
 int main(int argc, const char * argv[]) {
     
 //    test1();
@@ -260,8 +399,12 @@ int main(int argc, const char * argv[]) {
 //    test6();
 //    test7();
 //    test8();
-    test9();
-    
+//    test9();
+    test10();
+//    test11();
+       
+//    test12();
+          
     return 0;
 }
 
