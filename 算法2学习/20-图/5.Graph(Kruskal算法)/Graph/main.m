@@ -250,7 +250,7 @@ void test9() {
 }
 
 
-/// prim 最小生成树 mst_03.jpg
+/// Prim Kruskal 最小生成树 mst_03.jpg
 void test10() {
     ListGraph *graph = [[ListGraph alloc] init];
     [graph addEdgeFrom:@"A" to:@"B" widget:@4];
@@ -299,6 +299,8 @@ void test10() {
 //        [graph bfs:@"A"];
 //        [graph dfs:@"A"];
     [graph prim];
+    [graph kruskal];
+
 }
 
 
@@ -347,6 +349,7 @@ void test11() {
     [graph debugLog];
     
     [graph prim];
+    [graph kruskal];
 }
 
 
@@ -381,7 +384,7 @@ void test12() {
     [graph debugLog];
     
     [graph prim];
-    
+    [graph kruskal];
 //    {"A", "B", 17}, {"A", "F", 1}, {"A", "E", 16},
 //    {"B", "C", 6}, {"B", "D", 5}, {"B", "F", 11},
 //    {"C", "D", 10},
@@ -392,7 +395,7 @@ void test12() {
 
 /// 测试并查集
 void test13() {
-    FindUnion *fu = [[FindUnion alloc] initWith:20];
+    FindUnion *fu = [[FindUnion alloc] initWithCapacity:20];
     for (NSInteger i = 0; i < 12; i++) {
         [fu set:[NSString stringWithFormat:@"%ld", i]];
     }
@@ -464,9 +467,8 @@ int main(int argc, const char * argv[]) {
 //    test9();
 //    test10();
 //    test11();
-//    test12();
-    
-    test13();
+    test12();
+//    test13();
           
     return 0;
 }

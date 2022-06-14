@@ -11,23 +11,25 @@
 @interface FindUnion()
 
 @property (nonatomic, strong) NSMutableDictionary *nodes;
-//@property (nonatomic, copy) NSMutableArray<NSNumber *> *parents;
-//@property (nonatomic, copy) NSMutableArray *ranks;
 
 @end
 
 @implementation FindUnion
 
-- (instancetype)initWith:(NSInteger)capacity
+- (instancetype)initWithCapacity:(NSInteger)capacity
 {
     self = [super init];
     if (self) {
-    
         self.nodes = [[NSMutableDictionary alloc] initWithCapacity:capacity];
-//        self.parents = [[NSMutableArray alloc] initWithCapacity:capacity];
-//        for (NSInteger i = 0; i < capacity; i++) {
-//            self.parents[i] = [NSNumber numberWithInteger:i];
-//        }
+    }
+    return self;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.nodes = [[NSMutableDictionary alloc] initWithCapacity:20];
     }
     return self;
 }
@@ -35,7 +37,6 @@
 - (void)set:(NSString *)v {
     Node *node = [[Node alloc] initWith:v];
     [self.nodes setValue:node forKey:v];
-//    [self.nodes setValue:node forKey:@"aaaaaa"];
 }
 
 - (NSString *)find:(NSString *)v {

@@ -11,7 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface FindUnion : NSObject
 
-- (instancetype)initWith:(NSInteger)capacity;
+- (instancetype)initWithCapacity:(NSInteger)capacity;
 
 - (void)set:(NSString *)v;
 - (NSString *)find:(NSString *)v;

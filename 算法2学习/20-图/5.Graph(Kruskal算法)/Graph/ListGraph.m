@@ -373,18 +373,17 @@
 
     // 找最小值 应该用堆
     // Objective-C 里没有小顶堆
-    
     NSMutableSet<Vertex *> *vertexSet = [[NSMutableSet alloc] init];
     NSMutableSet<Edge *> *edgeSet = [[NSMutableSet alloc] init];
     NSMutableSet<Edge *> *edgeSetFor = [[NSMutableSet alloc] initWithSet:self.edges];
 
     // 初始化并查集
-    FindUnion *fu = [[FindUnion alloc] init];
-    for (Vertex *v in self.vertexes) {
+    FindUnion *fu = [[FindUnion alloc] initWithCapacity:20];
+    for (Vertex *v in self.vertexes.allValues) {
         [fu set:v.value];
     }
     
-    while (vertexSet.count != self.vertexes.count) {
+    while (edgeSet.count < self.vertexes.count - 1) {
         Vertex *searchV = nil;
         Edge *searchE = nil;
         
@@ -403,6 +402,7 @@
         if (searchV != nil && searchE != nil) {
             if ([fu isSame:searchE.to.value v2:searchE.from.value]) {
                 [edgeSet removeObject:searchE];
+                [edgeSetFor removeObject:searchE];
                 continue;
             }
             [fu union2:searchE.to.value v2:searchE.from.value];
