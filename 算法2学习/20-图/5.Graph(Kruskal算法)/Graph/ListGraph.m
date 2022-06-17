@@ -8,7 +8,7 @@
 #import "ListGraph.h"
 #import "Vertex.h"
 #import "Edge.h"
-#import "FindUnion.h""
+#import "FindUnion.h"
 
 @interface ListGraph()
 
@@ -401,7 +401,6 @@
         
         if (searchV != nil && searchE != nil) {
             if ([fu isSame:searchE.to.value v2:searchE.from.value]) {
-                [edgeSet removeObject:searchE];
                 [edgeSetFor removeObject:searchE];
                 continue;
             }
