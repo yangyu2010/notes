@@ -39,6 +39,7 @@
 		86649E7A2856E97800FB4320 /* mst_03.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mst_03.jpg; sourceTree = "<group>"; };
 		869C386B285327C800D5B9CB /* mst_02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mst_02.png; sourceTree = "<group>"; };
 		869C386C285327C800D5B9CB /* mst_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mst_01.png; sourceTree = "<group>"; };
+		86A9CAC6286060AC00EA7FB1 /* sp1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sp1.jpg; sourceTree = "<group>"; };
 		86E7D824285741550009FC09 /* FindUnion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FindUnion.h; sourceTree = "<group>"; };
 		86E7D825285741550009FC09 /* FindUnion.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FindUnion.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -77,6 +78,7 @@
 				869C386B285327C800D5B9CB /* mst_02.png */,
 				86649E7A2856E97800FB4320 /* mst_03.jpg */,
 				866438AC284F5F8F00EDDA26 /* Xnip2022-06-07_18-27-19.jpg */,
+				86A9CAC6286060AC00EA7FB1 /* sp1.jpg */,
 				8661E487284EF9EE00772E8F /* main.m */,
 				8661E48E284EFAC600772E8F /* ListGraph.h */,
 				8661E48F284EFAC600772E8F /* ListGraph.m */,

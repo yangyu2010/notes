@@ -454,7 +454,7 @@ void test13() {
 
 }
 
-/// 最短路径 Dijkstra
+/// 最短路径 Dijkstra (图片sp1)
 void test14() {
     ListGraph *graph = [[ListGraph alloc] init];
     [graph addEdgeFrom:@"A" to:@"E" widget:@100];
@@ -522,7 +522,7 @@ void test15() {
     [graph addEdgeFrom:@"F" to:@"E" widget:@10];
     [graph addEdgeFrom:@"E" to:@"F" widget:@10];
     
-    [graph dijkstra:@"B"];
+    [graph dijkstra:@"A"];
 }
 
 
@@ -541,8 +541,8 @@ int main(int argc, const char * argv[]) {
 //    test11();
 //    test12();
 //    test13();
-//    test14();
     
+//    test14();
     test15();
         
     return 0;

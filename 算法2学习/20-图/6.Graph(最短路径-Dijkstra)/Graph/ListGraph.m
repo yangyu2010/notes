@@ -427,14 +427,16 @@
     
     NSMutableDictionary *pathDict = [[NSMutableDictionary alloc] init];
     NSMutableDictionary *selectedPathDict = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *selectedEdgesDict = [[NSMutableDictionary alloc] init];
 
     // 第一步 把起点的所有outEdges加入
     // 更新到路径表中
     for (Edge *e in beginVertex.outEdges) {
         [pathDict setValue:e.weight forKey:e.to.value];
+        [selectedEdgesDict setValue:@[e] forKey:e.to.value];
     }
     
-    // 第二步 从路径表中 找到最小权重的边 就是下一个
+    // 第二步 从路径表中 找到最小权重的边
     while (pathDict.count > 0) {
         Vertex *minV = nil;
         NSNumber *minWeight = nil;
@@ -450,31 +452,58 @@
             [pathDict removeObjectForKey:minV.value];
             [selectedPathDict setValue:minWeight forKey:minV.value];
             
+            // 第三步 遍历当前顶点的outEdges 进行松弛操作
             for (Edge *e in minV.outEdges) {
                 if ([selectedPathDict.allKeys containsObject:e.to.value] || [e.to.value isEqualToString:beginVertex.value]) {
                     continue;
                 }
                 
+                NSInteger newWeight = [minWeight integerValue] + [e.weight integerValue];
                 if ([pathDict.allKeys containsObject:e.to.value]) {
                     NSNumber *weight = [pathDict valueForKey:e.to.value];
-                    NSInteger newWeight = [minWeight integerValue] + [e.weight integerValue];
-                    if ([weight integerValue] > newWeight) {
-                        [pathDict setValue:[NSNumber numberWithInteger:newWeight] forKey:e.to.value];
+                    if ([weight integerValue] <= newWeight) {
+                        continue;
                     }
-                } else {
-                    NSInteger newWeight = [minWeight integerValue] + [e.weight integerValue];
-                    [pathDict setValue:[NSNumber numberWithInteger:newWeight] forKey:e.to.value];
                 }
+                
+                NSArray *edges = [selectedEdgesDict valueForKey:minV.value];
+                NSMutableArray *mEdges = [[NSMutableArray alloc] initWithArray:edges];
+                [mEdges addObject:e];
+                [selectedEdgesDict setValue:mEdges forKey:e.to.value];
+                [pathDict setValue:[NSNumber numberWithInteger:newWeight] forKey:e.to.value];
+
+                
+//                if ([pathDict.allKeys containsObject:e.to.value]) {
+//                    NSNumber *weight = [pathDict valueForKey:e.to.value];
+//                    NSInteger newWeight = [minWeight integerValue] + [e.weight integerValue];
+//                    if ([weight integerValue] > newWeight) {
+//                        NSArray *edges = [selectedEdgesDict valueForKey:minV.value];
+//                        NSMutableArray *mEdges = [[NSMutableArray alloc] initWithArray:edges];
+//                        [mEdges addObject:e];
+//                        [selectedEdgesDict setValue:mEdges forKey:e.to.value];
+//
+//                        [pathDict setValue:[NSNumber numberWithInteger:newWeight] forKey:e.to.value];
+//                    }
+//                } else {
+//                    NSArray *edges = [selectedEdgesDict valueForKey:minV.value];
+//                    NSMutableArray *mEdges = [[NSMutableArray alloc] initWithArray:edges];
+//                    [mEdges addObject:e];
+//                    [selectedEdgesDict setValue:mEdges forKey:e.to.value];
+//
+//                    NSInteger newWeight = [minWeight integerValue] + [e.weight integerValue];
+//                    [pathDict setValue:[NSNumber numberWithInteger:newWeight] forKey:e.to.value];
+//                }
             }
         }
-        
-//        NSLog(@"%@", pathDict);
-//        NSLog(@"%@", minPathDict);
     }
     
-    NSLog(@"%@", pathDict);
-    NSLog(@"%@", selectedPathDict);
-
+//    NSLog(@"%@", pathDict);
+//    NSLog(@"%@", selectedPathDict);
+    for (NSString *vertex in selectedEdgesDict.allKeys) {
+        NSLog(@"%@", vertex);
+        NSLog(@"%@", [selectedPathDict valueForKey:vertex]);
+        NSLog(@"%@", [selectedEdgesDict valueForKey:vertex]);
+    }
 }
 
 //// 最短路径
@@ -485,8 +514,7 @@
 //    }
 //
 //    NSMutableDictionary *pathDict = [[NSMutableDictionary alloc] init];
-////    NSMutableSet<Vertex *> *vertexSet = [[NSMutableSet alloc] init];
-//    NSMutableDictionary *minPathDict = [[NSMutableDictionary alloc] init];
+//    NSMutableDictionary *selectedPathDict = [[NSMutableDictionary alloc] init];
 //
 //    // 第一步 把起点的所有outEdges加入
 //    // 更新到路径表中
@@ -494,8 +522,8 @@
 //        [pathDict setValue:e.weight forKey:e.to.value];
 //    }
 //
-//    // 第二步 从路径表中 找到最小权重的边 就是下一个
-//    while (pathDict.count > 0 && minPathDict.count < self.vertexes.count - 1) {
+//    // 第二步 从路径表中 找到最小权重的边
+//    while (pathDict.count > 0) {
 //        Vertex *minV = nil;
 //        NSNumber *minWeight = nil;
 //        for (NSString *key in pathDict.allKeys) {
@@ -508,28 +536,30 @@
 //
 //        if (minV != nil) {
 //            [pathDict removeObjectForKey:minV.value];
-//            [minPathDict setValue:minWeight forKey:minV.value];
+//            [selectedPathDict setValue:minWeight forKey:minV.value];
 //
+//            // 第三步 遍历当前顶点的outEdges 进行松弛操作
 //            for (Edge *e in minV.outEdges) {
-//                NSInteger newWeight = [minWeight integerValue] + [e.weight integerValue];
+//                if ([selectedPathDict.allKeys containsObject:e.to.value] || [e.to.value isEqualToString:beginVertex.value]) {
+//                    continue;
+//                }
 //
 //                if ([pathDict.allKeys containsObject:e.to.value]) {
 //                    NSNumber *weight = [pathDict valueForKey:e.to.value];
+//                    NSInteger newWeight = [minWeight integerValue] + [e.weight integerValue];
 //                    if ([weight integerValue] > newWeight) {
 //                        [pathDict setValue:[NSNumber numberWithInteger:newWeight] forKey:e.to.value];
 //                    }
 //                } else {
+//                    NSInteger newWeight = [minWeight integerValue] + [e.weight integerValue];
 //                    [pathDict setValue:[NSNumber numberWithInteger:newWeight] forKey:e.to.value];
 //                }
 //            }
 //        }
-//
-////        NSLog(@"%@", pathDict);
-////        NSLog(@"%@", minPathDict);
 //    }
 //
 //    NSLog(@"%@", pathDict);
-//    NSLog(@"%@", minPathDict);
+//    NSLog(@"%@", selectedPathDict);
 //
 //}
 
