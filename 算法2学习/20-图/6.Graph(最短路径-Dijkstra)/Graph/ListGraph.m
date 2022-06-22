@@ -446,7 +446,7 @@
                 minWeight = weight;
                 minV = [self.vertexes valueForKey:key];
             }
-        }
+        } 
 
         if (minV != nil) {
             [pathDict removeObjectForKey:minV.value];
@@ -454,25 +454,33 @@
             
             // 第三步 遍历当前顶点的outEdges 进行松弛操作
             for (Edge *e in minV.outEdges) {
-                if ([selectedPathDict.allKeys containsObject:e.to.value] || [e.to.value isEqualToString:beginVertex.value]) {
+//                if ([selectedPathDict.allKeys containsObject:e.to.value] || [e.to.value isEqualToString:beginVertex.value]) {
+//                    continue;
+//                }
+                
+                if ([selectedPathDict.allKeys containsObject:e.to.value]) {
                     continue;
                 }
                 
+//                NSInteger newWeight = [minWeight integerValue] + [e.weight integerValue];
+//                if ([pathDict.allKeys containsObject:e.to.value]) {
+//                    NSNumber *weight = [pathDict valueForKey:e.to.value];
+//                    if ([weight integerValue] <= newWeight) {
+//                        continue;
+//                    }
+//                }
+                
                 NSInteger newWeight = [minWeight integerValue] + [e.weight integerValue];
-                if ([pathDict.allKeys containsObject:e.to.value]) {
-                    NSNumber *weight = [pathDict valueForKey:e.to.value];
-                    if ([weight integerValue] <= newWeight) {
-                        continue;
-                    }
+                NSInteger oldWeight = [[pathDict valueForKey:e.to.value] integerValue];
+                if ([pathDict.allKeys containsObject:e.to.value] == NO || newWeight < oldWeight) {
+                    NSArray *edges = [selectedEdgesDict valueForKey:minV.value];
+                    NSMutableArray *mEdges = [[NSMutableArray alloc] initWithArray:edges];
+                    [mEdges addObject:e];
+                    [selectedEdgesDict setValue:mEdges forKey:e.to.value];
+                    [pathDict setValue:[NSNumber numberWithInteger:newWeight] forKey:e.to.value];
                 }
                 
-                NSArray *edges = [selectedEdgesDict valueForKey:minV.value];
-                NSMutableArray *mEdges = [[NSMutableArray alloc] initWithArray:edges];
-                [mEdges addObject:e];
-                [selectedEdgesDict setValue:mEdges forKey:e.to.value];
-                [pathDict setValue:[NSNumber numberWithInteger:newWeight] forKey:e.to.value];
 
-                
 //                if ([pathDict.allKeys containsObject:e.to.value]) {
 //                    NSNumber *weight = [pathDict valueForKey:e.to.value];
 //                    NSInteger newWeight = [minWeight integerValue] + [e.weight integerValue];
@@ -497,8 +505,9 @@
         }
     }
     
-//    NSLog(@"%@", pathDict);
-//    NSLog(@"%@", selectedPathDict);
+    [selectedPathDict removeObjectForKey:beginVertex.value];
+    [selectedEdgesDict removeObjectForKey:beginVertex.value];
+
     for (NSString *vertex in selectedEdgesDict.allKeys) {
         NSLog(@"%@", vertex);
         NSLog(@"%@", [selectedPathDict valueForKey:vertex]);
