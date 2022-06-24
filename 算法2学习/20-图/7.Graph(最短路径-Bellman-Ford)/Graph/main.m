@@ -554,8 +554,8 @@ void test17() {
     [graph addEdgeFrom:@"1" to:@"0" widget:@-2];
     [graph addEdgeFrom:@"1" to:@"2" widget:@7];
 
-//    [graph dijkstra:@"0"];
-    [graph bellmanFord:@"0"];
+    [graph dijkstra:@"0"];
+//    [graph bellmanFord:@"0"];
 }
 
 int main(int argc, const char * argv[]) {

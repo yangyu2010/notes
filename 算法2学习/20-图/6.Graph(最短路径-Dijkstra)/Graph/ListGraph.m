@@ -431,11 +431,12 @@
 
     // 第一步 把起点的所有outEdges加入
     // 更新到路径表中
-    for (Edge *e in beginVertex.outEdges) {
-        [pathDict setValue:e.weight forKey:e.to.value];
-        [selectedEdgesDict setValue:@[e] forKey:e.to.value];
-    }
-    
+//    for (Edge *e in beginVertex.outEdges) {
+//        [pathDict setValue:e.weight forKey:e.to.value];
+//        [selectedEdgesDict setValue:@[e] forKey:e.to.value];
+//    }
+    [pathDict setValue:@0 forKey:beginVertex.value];
+
     // 第二步 从路径表中 找到最小权重的边
     while (pathDict.count > 0) {
         Vertex *minV = nil;
