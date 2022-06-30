@@ -25,6 +25,7 @@
         "__string": "c",
         "time.h": "c",
         "stdlib.h": "c",
-        "assert.h": "c"
+        "assert.h": "c",
+        "memory": "c"
     }
 }
