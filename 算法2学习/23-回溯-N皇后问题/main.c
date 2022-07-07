@@ -1,38 +1,37 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void placeQueue(int);
+void placeQueen(int);
 void place(int);
 int valid(int, int);
 void showPlace();
 
 int main() {
-    placeQueue(8);
+    placeQueen(8);
     return 0;
 }
 
+/// 每一行的皇后放在上面位置
+/// g_cols[0] = 1 就代表第0行 皇后在1的位置
+/// g_cols[3] = 4 就代表第3行 皇后在4的位置
 int *g_cols;
+/// 有几行几列
 int g_size;
-int g_queue_count;
+/// 最终有几种摆法
+int g_queen_count;
 
-void placeQueue(int size) {
+void placeQueen(int size) {
     g_size = size;
     g_cols = (int *)calloc(size, sizeof(int));
-    g_queue_count = 0;
+    g_queen_count = 0;
     place(0);
-    printf("g_queue_count = %d", g_queue_count);
+    printf("g_queen_count = %d", g_queen_count);
 }
 
-/*
-    0 0 0 0
-    0 0 0 0
-    0 0 0 0
-    0 0 0 0
- */
-
+/// 摆放第几行
 void place(int row) {
     if (row == g_size) {
-        g_queue_count += 1;
+        g_queen_count += 1;
         showPlace();
         return;
     }
@@ -45,6 +44,7 @@ void place(int row) {
     }
 }
 
+/// [row, col]这个位置是否可以摆放
 int valid(int row, int col) {
     for (int i = 0; i < row; i++) {
         /// 当前列col 如果和之前的列相同 返回0
@@ -74,6 +74,7 @@ int valid(int row, int col) {
     return 1;
 }
 
+/// 每次摆放成功后 打印当前的摆放布局
 void showPlace() {
     for (int row = 0; row < g_size; row++) {
         for (int col = 0; col < g_size; col++) {
