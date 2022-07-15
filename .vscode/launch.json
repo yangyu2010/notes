@@ -12,21 +12,54 @@
             //"program": "${workspaceFolder}/main",
             "program": "${fileDirname}/main",
             //"args": ["-c" ,"${workspaceFolder}/trunk/conf/srs.conf"],
-            "stopAtEntry": false,  
+            "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
             "externalConsole": false,
             "MIMode": "lldb",
-           "setupCommands": [
-            {
-            "description": "Enable pretty-printing for gdb",
-            "text": "-enable-pretty-printing",
-            "ignoreFailures": true
-            }
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
             ],
             "preLaunchTask": "C/C++: clang 生成活动文件" // 调试之前要执行的任务，和tasks.json中的label必须相同
-        }
+        },
+        // {
+        //     "command": "swift run",
+        //     "name": "run swift",
+        //     "request": "launch",
+        //     "type": "node-terminal"
+        // },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug demo",
+            "program": "${fileDirname}/main.swift",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "preLaunchTask": "swift-tests"
+        },
+        // {
+        //     "type": "lldb",
+        //     "request": "launch",
+        //     "name": "Release demo",
+        //     "program": "${workspaceFolder:demo}/.build/release/demo",
+        //     "args": [],
+        //     "cwd": "${workspaceFolder:demo}",
+        //     "preLaunchTask": "swift: Build Release demo"
+        // },
+        // {
+        //     "type": "lldb",
+        //     "request": "launch",
+        //     "name": "Run Swift",
+        //     "program": "/Applications/Xcode.app/Contents/Developer/usr/bin/xctest",
+        //     "args": [
+        //         ".build/debug/demoPackageTests.xctest"
+        //     ],
+        //     "cwd": "${workspaceFolder:main.swift}",
+        //     "preLaunchTask": "swift: Build All"
+        // }
     ]
-   
 }
-

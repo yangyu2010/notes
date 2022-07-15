@@ -21,6 +21,17 @@
             ],
             "group": "build",
             "detail": "编译器: /usr/bin/clang"
+        },
+        {
+            "label": "swift-tests",
+            "type": "process",
+            "command": "swift",
+            "group": "build",
+            "args": [
+                "build",
+                "--build-tests"
+                // for TensorFlow add "-Xlinker", "-ltensorflow"
+            ]
         }
     ]
 }
