@@ -26,7 +26,8 @@
         "time.h": "c",
         "stdlib.h": "c",
         "assert.h": "c",
-        "memory": "c"
+        "memory": "c",
+        "limits.h": "c"
     },
     "sourcekit-lsp.serverPath": "/usr/bin/sourcekit-lsp",
     "sourcekit-lsp.trace.server": "messages",
