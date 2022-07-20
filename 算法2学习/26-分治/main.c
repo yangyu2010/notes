@@ -69,6 +69,7 @@ int maxSub(int *nums, int begin, int end) {
 /**
 int maxSubArray(int *nums, int numsSize) {
     int max = INT_MIN;
+    int begin = 0, end = 0;
 
     for (int i = 0; i < numsSize; i++) {
         int size = 0;
@@ -76,10 +77,12 @@ int maxSubArray(int *nums, int numsSize) {
             size += nums[j];
             if (size > max) {
                 max = size;
+                begin = i;
+                end = j;
             }
         }
     }
-
+    printf("range is [%d, %d]\n", begin, end);
     return max;
 }
 */
