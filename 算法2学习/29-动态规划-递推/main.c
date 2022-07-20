@@ -8,7 +8,7 @@ int coinChangeDP(int *coins, int coinsSize, int amount, int *dp);
 int main() {
     // int coinsSize = 4;
     // int *coins = (int *)calloc(coinsSize, sizeof(int));
-    // int array[4] = {1, 5, 10, 25};
+    // int array[4] = {1, 5, 20, 25};
     // for (int i = 0; i < coinsSize; i++) {
     //     coins[i] = array[i];
     // }
@@ -18,19 +18,19 @@ int main() {
 
     int coinsSize = 1;
     int *coins = (int *)calloc(coinsSize, sizeof(int));
-    int array[1] = {5};
+    int array[1] = {2};
     for (int i = 0; i < coinsSize; i++) {
         coins[i] = array[i];
     }
 
-    int count = coinChange(coins, coinsSize, 5);
+    int count = coinChange(coins, coinsSize, 1);
     printf("%d", count);
 
     return 0;
 }
 
 int coinChange(int *coins, int coinsSize, int amount) {
-    if (amount == 0) {
+    if (coins == NULL || coinsSize == 0 || amount == 0) {
         return 0;
     }
 
@@ -42,28 +42,26 @@ int coinChange(int *coins, int coinsSize, int amount) {
         }
     }
 
-    return coinChangeDP(coins, coinsSize, amount, dp);
-}
+    for (int i = 1; i <= amount; i++) {
+        if (dp[i] > 0) {
+            continue;
+        }
 
-int coinChangeDP(int *coins, int coinsSize, int amount, int *dp) {
-    if (amount < 0) {
-        return INT_MAX;
-    }
-    if (dp[amount] == 0) {
         int min = INT_MAX;
-        int find = 0;
-        for (int i = 0; i < coinsSize; i++) {
-            int coin = coinChangeDP(coins, coinsSize, amount - coins[i], dp);
-            if (coin > 0 && coin < min) {
-                min = coin;
-                find = 1;
+        //遍历货币列表 找出最少需要的个数
+        for (int j = 0; j < coinsSize; j++) {
+            int coin = coins[j];
+            if (i > coin && dp[i - coin] > 0 && dp[i - coin] < min) {
+                min = dp[i - coin];
             }
         }
-        if (find == 1) {
-            dp[amount] = min + 1;
+
+        if (min == INT_MAX) {
+            dp[i] = -1;
         } else {
-            dp[amount] = -1;
+            dp[i] = min + 1;
         }
     }
+
     return dp[amount];
 }
