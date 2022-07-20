@@ -129,6 +129,7 @@ int main() {
     return 0;
 }
 
+
 int coinChange(int *coins, int coinsSize, int amount) {
     if (amount == 0) {
         return 0;
@@ -154,5 +155,5 @@ int coinChange(int *coins, int coinsSize, int amount) {
         }
     }
 
-    return find == 0 ? -1 : (min + 1);
+    return find == 0 ? - 1 : (min + 1);
 }
