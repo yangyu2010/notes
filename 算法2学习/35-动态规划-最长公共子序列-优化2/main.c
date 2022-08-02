@@ -7,14 +7,18 @@
 int longestCommonSubsequence(char *text1, char *text2);
 
 int main() {
-    char *text1 = "abcde";
-    char *text2 = "acde"; 
+    // char *text1 = "abcde";
+    // char *text2 = "acde";
+
+    char *text1 = "acde";
+    char *text2 = "abcde";
 
     int count = longestCommonSubsequence(text1, text2);
     printf("%d", count);
     return 0;
 }
 
+// 用一维数组来
 // int longestCommonSubsequence(char *text1, char *text2) {
 //     int len1 = strlen(text1);
 //     int len2 = strlen(text2);

@@ -35,8 +35,11 @@ int coinChange(int *coins, int coinsSize, int amount) {
     }
 
     int *dp = (int *)calloc(amount + 1, sizeof(int));
+    /// 初始化默认值 比如dp[1] = 1; dp[5] = 1;
     for (int i = 0; i < coinsSize; i++) {
         int coin = coins[i];
+        /// 必须比要兑换的数额少, 比如你要替换20元, 那dp[50] dp[100]不能是1
+        /// dp[1] dp[5] dp[10]这些小的才是1
         if (coin <= amount) {
             dp[coin] = 1;
         }
