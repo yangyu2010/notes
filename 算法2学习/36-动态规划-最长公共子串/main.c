@@ -34,8 +34,9 @@ if (str1[i] == str2[j]) {
 int longestCommonSubstring(char *text1, char *text2);
 
 int main() {
-    char *text1 = "abcdefffff";
-    char *text2 = "acdef";
+    char *text1 = "abcd";
+    char *text2 = "dabc";
+
     // char *text1 = "acde";
     // char *text2 = "abcde";
 
@@ -53,15 +54,16 @@ int longestCommonSubstring1(char *text1, char *text2) {
     if (text1 == NULL || len1 == 0 || text2 == NULL || len2 == 0) {
         return 0;
     }
-    int dp[len1][len2];
+    int dp[len1 + 1][len2 + 1];
     memset(dp, 0, sizeof(dp));
     int max = 0;
 
-    for (int i = 1; i < len1; i++) {
-        for (int j = 1; j < len2; j++) {
+    for (int i = 1; i <= len1; i++) {
+        for (int j = 1; j <= len2; j++) {
             if (text1[i - 1] == text2[j - 1]) {
                 dp[i][j] = dp[i - 1][j - 1] + 1;
-                printf("%c %c %d %d %d\n", text1[i], text2[j], i, j, dp[i][j]);
+                printf("%c %c %d %d %d\n", text1[i - 1], text2[j - 1], i, j,
+                       dp[i][j]);
                 if (dp[i][j] > max) {
                     max = dp[i][j];
                 }
@@ -79,18 +81,19 @@ int longestCommonSubstring2(char *text1, char *text2) {
         return 0;
     }
     //根据行大小来定义dp数组
-    int dp[len2];
+    int dp[len2 + 1];
     memset(dp, 0, sizeof(dp));
     int max = 0;
 
-    for (int i = 1; i < len1; i++) { // 行
+    for (int i = 1; i <= len1; i++) { // 行
         int current = 0;
-        for (int j = 1; j < len2; j++) { // 列
+        for (int j = 1; j <= len2; j++) { // 列
             int leftTop = current;
             current = dp[j];
             if (text1[i - 1] == text2[j - 1]) {
                 dp[j] = leftTop + 1;
-                printf("%c %c %d %d %d\n", text1[i], text2[j], i, j, dp[j]);
+                printf("%c %c %d %d %d\n", text1[i - 1], text2[j - 1], i, j,
+                       dp[j]);
                 if (dp[j] > max) {
                     max = dp[j];
                 }
@@ -124,14 +127,15 @@ int longestCommonSubstring(char *text1, char *text2) {
     memset(dp, 0, sizeof(dp));
     int max = 0;
 
-    for (int i = 1; i < row; i++) { // 行
+    for (int i = 1; i <= row; i++) { // 行
         int current = 0;
-        for (int j = 1; j < col; j++) { // 列
+        for (int j = 1; j <= col; j++) { // 列
             int leftTop = current;
             current = dp[j];
             if (rows[i - 1] == cols[j - 1]) {
                 dp[j] = leftTop + 1;
-                printf("%c %c %d %d %d\n", rows[i], cols[j], i, j, dp[j]);
+                printf("%c %c %d %d %d\n", rows[i - 1], cols[j - 1], i, j,
+                       dp[j]);
                 if (dp[j] > max) {
                     max = dp[j];
                 }
