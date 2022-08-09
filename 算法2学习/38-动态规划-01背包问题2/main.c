@@ -23,8 +23,11 @@ int main() {
     int *values = (int *)calloc(size, sizeof(int));
     int *weights = (int *)calloc(size, sizeof(int));
 
-    int arrayValues[size] = {6, 3, 5, 4, 6};
-    int arrayWeight[size] = {2, 2, 6, 5, 4};
+    // int arrayValues[size] = {6, 3, 5, 4, 6};
+    // int arrayWeight[size] = {2, 2, 6, 5, 4};
+    int arrayValues[size] = {6, 3, 5, 4, 16};
+    int arrayWeight[size] = {2, 1, 6, 15, 6};
+
     for (int i = 0; i < size; i++) {
         values[i] = arrayValues[i];
         weights[i] = arrayWeight[i];
@@ -38,6 +41,41 @@ int main() {
 
 int select(int *values, const int valuesCount, int *weights,
            const int weightsCount, const int capacity) {
+    if (values == NULL || weights == NULL || valuesCount != weightsCount) {
+        return 0;
+    }
+
+    int dp[valuesCount + 1][capacity + 1];
+    for (int i = 0; i <= valuesCount; i++) {
+        dp[i][0] = 0;
+    }
+    for (int j = 1; j <= capacity; j++) {
+        dp[0][j] = INT_MIN;
+    }
+
+    for (int i = 1; i <= valuesCount; i++) {
+        for (int j = 1; j <= capacity; j++) {
+            if (weights[i - 1] > j) {
+                dp[i][j] = dp[i - 1][j];
+            } else {
+                dp[i][j] = fmax(dp[i - 1][j],
+                                dp[i - 1][j - weights[i - 1]] + values[i - 1]);
+            }
+        }
+    }
+
+    for (int i = 0; i <= valuesCount; i++) {
+        for (int j = 0; j <= capacity; j++) {
+            printf("%d ", dp[i][j]);
+        }
+        printf("\n");
+    }
+
+    return dp[valuesCount][capacity] > 0 ? dp[valuesCount][capacity] : -1;
+}
+
+int select2(int *values, const int valuesCount, int *weights,
+            const int weightsCount, const int capacity) {
     if (values == NULL || weights == NULL || valuesCount != weightsCount) {
         return 0;
     }

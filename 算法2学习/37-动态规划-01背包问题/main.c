@@ -60,7 +60,7 @@ int main() {
     return 0;
 }
 
-int select1(int *values, const int valuesCount, int *weights,
+int select(int *values, const int valuesCount, int *weights,
             const int weightsCount, const int capacity) {
     if (values == NULL || weights == NULL || valuesCount != weightsCount) {
         return 0;
@@ -80,8 +80,8 @@ int select1(int *values, const int valuesCount, int *weights,
         }
     }
 
-    for (int i = 0; i < 6; i++) {
-        for (int j = 0; j < 11; j++) {
+    for (int i = 0; i <= valuesCount; i++) {
+        for (int j = 0; j <= capacity; j++) {
             printf("%d ", dp[i][j]);
         }
         printf("\n");
@@ -90,7 +90,7 @@ int select1(int *values, const int valuesCount, int *weights,
     return dp[valuesCount][capacity];
 }
 
-int select(int *values, const int valuesCount, int *weights,
+int select1(int *values, const int valuesCount, int *weights,
            const int weightsCount, const int capacity) {
     if (values == NULL || weights == NULL || valuesCount != weightsCount) {
         return 0;
