@@ -11,11 +11,10 @@ int select(int *, int, int *, int, int);
 在保证总重量不超过 W 的前提下，选择某些物品装入背包，背包的最大总价值是多少?
 注意:每个物品只有 1 件，也就是每个物品只能选择 0 件或者 1 件
 
-
-假设 dp(i, j) 是 最大承重为 j、有前 i 件物品可选 时的最大总价值，i ∈ [1, n]，j ∈
-[1, W] 初始值 dp(i, 0) = 0, dp(0, j) = 0 如果 j < weights[i – 1]，那么 dp(i, j)
-= dp(i – 1, j) 如果 j ≥ weights[i – 1]，那么 dp(i, j) = max { dp(i – 1, j), dp(i
-– 1, j – weights[i – 1]) + values[i – 1] }
+假设 dp(i, j) 是 最大承重为 j、有前 i 件物品可选 时的最大总价值，i ∈ [1, n]，j ∈ [1, W] 
+初始值 dp(i, 0) = 0, dp(0, j) = 0 
+如果 j < weights[i – 1]，那么 dp(i, j) = dp(i – 1, j) 
+如果 j ≥ weights[i – 1]，那么 dp(i, j) = max { dp(i – 1, j), dp(i – 1, j – weights[i – 1]) + values[i – 1] }
 
 int values[5] = {6, 3, 5, 4, 6};
 int weight[5] = {2, 2, 6, 5, 4};
@@ -106,13 +105,13 @@ int select(int *values, const int valuesCount, int *weights,
                 // dp[j] = dp[j]; 直接continue
                 continue;
             }
-            dp[j] = fmax(dp[j - 1], dp[j - weights[i - 1]] + values[i - 1]);
+            dp[j] = fmax(dp[j], dp[j - weights[i - 1]] + values[i - 1]);
         }
 
-        // for (int i = 0; i <= capacity; i++) {
-        //     printf("%d ", dp[i]);
-        // }
-        // printf("\n");
+        for (int i = 0; i <= capacity; i++) {
+            printf("%d ", dp[i]);
+        }
+        printf("\n");
     }
 
     return dp[capacity];
