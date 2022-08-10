@@ -133,36 +133,6 @@ int findTargetSumWays(int *nums, int numsSize, int target) {
     }
 
     int len = sum << 1;
-    int dp[len + 1];
-    memset(dp, 0, sizeof(dp));
-    dp[len >> 1] = 1;
-
-    for (int i = 1; i <= numsSize; i++) {
-        for (int j = sum; j >= -sum; j--) {
-            if (j - nums[i - 1] + sum < 0) {
-                dp[j + sum] = dp[j + nums[i - 1] + sum];
-            } else if (j + nums[i - 1] + sum > len) {
-                dp[j + sum] = dp[j - nums[i - 1] + sum];
-            } else {
-                dp[j + sum] =
-                    dp[j - nums[i - 1] + sum] + dp[j + nums[i - 1] + sum];
-            }
-        }
-    }
-    return dp[len];
-}
-
-/**
-int findTargetSumWays(int *nums, int numsSize, int target) {
-    int sum = 0;
-    for (int i = 0; i < numsSize; i++) {
-        sum += nums[i];
-    }
-    if (abs(target) > abs(sum)) {
-        return 0;
-    }
-
-    int len = sum << 1;
     int dp[numsSize + 1][len + 1];
     memset(dp, 0, sizeof(dp));
     dp[0][len >> 1] = 1;
@@ -214,17 +184,3 @@ int findTargetSumWays(int *nums, int numsSize, int target) {
 
     return dp[numsSize][sum + target];
 }
-
-// int findTargetSumWays(int *nums, int numsSize, int target) {
-//     int dp[target + 1];
-//     memset(dp, 0, sizeof(int) * (target + 1));
-//     dp[0] = 1;
-//     for (int i = 0; i < numsSize; i++) {
-//         for (int j = target; j >= 0; j--) {
-//             dp[j] = dp[j - nums[i - 1]] + dp[-j + nums[i - 1]];
-//         }
-//     }
-
-//     return dp[target];
-// }
-*/
