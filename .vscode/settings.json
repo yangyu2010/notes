@@ -28,7 +28,8 @@
         "assert.h": "c",
         "memory": "c",
         "limits.h": "c",
-        "complex": "c"
+        "complex": "c",
+        "ratio": "c"
     },
     "sourcekit-lsp.serverPath": "/usr/bin/sourcekit-lsp",
     "sourcekit-lsp.trace.server": "messages",

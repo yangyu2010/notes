@@ -109,21 +109,21 @@ i
  */
 
 int main() {
-    const int size = 5;
+    const int size = 1;
     int *nums = (int *)calloc(size, sizeof(int));
 
-    int arrayNums[size] = {1, 1, 1, 1, 1};
+    int arrayNums[size] = {1};
     for (int i = 0; i < size; i++) {
         nums[i] = arrayNums[i];
     }
 
-    int result = findTargetSumWays(nums, size, 3);
+    int result = findTargetSumWays(nums, size, 1);
     printf("%d", result);
 
     return 0;
 }
 
-int findTargetSumWays(int *nums, int numsSize, int target) {
+int findTargetSumWays1(int *nums, int numsSize, int target) {
     int sum = 0;
     for (int i = 0; i < numsSize; i++) {
         sum += nums[i];
@@ -135,6 +135,7 @@ int findTargetSumWays(int *nums, int numsSize, int target) {
     int len = sum << 1;
     int dp[numsSize + 1][len + 1];
     memset(dp, 0, sizeof(dp));
+    /// dp[0][0]=1
     dp[0][len >> 1] = 1;
 
     for (int i = 0; i <= numsSize; i++) {
@@ -158,6 +159,7 @@ int findTargetSumWays(int *nums, int numsSize, int target) {
             // dp[i-1][j+nums[i]+sum]+dp[i-1][j-nums[i]+sum];
             // }
 
+            // if和else if是为了防止越界
             if (j - nums[i - 1] + sum < 0) {
                 dp[i][j + sum] = dp[i - 1][j + nums[i - 1] + sum];
             } else if (j + nums[i - 1] + sum > len) {
@@ -183,4 +185,90 @@ int findTargetSumWays(int *nums, int numsSize, int target) {
     printf("-----------------\n");
 
     return dp[numsSize][sum + target];
+}
+
+/**
+记数组的元素和为 total，添加 + 号的元素之和为 pos，添加 - 号的元素之和为 neg
+pos + neg = total
+pos - neg = target
+
+pos - (total - pos) = target
+(total - neg) - neg = target
+
+pos = (total + target) / 2
+neg = (total − target) / 2
+​
+则转后为找出 pos 或者 neg 即可
+
+dp[i][j] 前i位最多几种可能 刚好凑齐j
+初始值 dp[0][0] = 1
+i ∈ [1, numsSize]，j ∈ [0, pos] 或者 [0, neg]
+*/
+int findTargetSumWays2(int *nums, int numsSize, int target) {
+    if (nums == NULL || numsSize == 0) {
+        return 0;
+    }
+
+    int sum = 0;
+    for (int i = 0; i < numsSize; i++) {
+        sum += nums[i];
+    }
+
+    int diff = sum - target;
+    if (diff < 0 || diff & 1 != 0) {
+        return 0;
+    }
+
+    int capacity = diff >> 1;
+    int dp[numsSize + 1][capacity + 1];
+    memset(dp, 0, sizeof(dp));
+    dp[0][0] = 1;
+
+    for (int i = 1; i <= numsSize; i++) {
+        for (int j = 0; j <= capacity; j++) {
+            if (nums[i - 1] > j) {
+                dp[i][j] = dp[i - 1][j];
+            } else {
+                dp[i][j] = dp[i - 1][j] + dp[i - 1][j - nums[i - 1]];
+            }
+            printf("%d %d = %d; ", i, j, dp[i][j]);
+        }
+        printf("\n");
+    }
+
+    return dp[numsSize][capacity];
+}
+
+int findTargetSumWays(int *nums, int numsSize, int target) {
+    if (nums == NULL || numsSize == 0) {
+        return 0;
+    }
+
+    int sum = 0;
+    for (int i = 0; i < numsSize; i++) {
+        sum += nums[i];
+    }
+
+    int diff = sum - target;
+    if (diff < 0 || diff & 1 != 0) {
+        return 0;
+    }
+
+    int capacity = diff >> 1;
+    int dp[capacity + 1];
+    memset(dp, 0, sizeof(dp));
+    dp[0] = 1;
+
+    for (int i = 1; i <= numsSize; i++) {
+        for (int j = capacity; j >= nums[i - 1]; j--) {
+            if (nums[i - 1] > j) {
+                continue;
+            }
+            dp[j] = dp[j] + dp[j - nums[i - 1]];
+            printf("%d %d = %d; ", i, j, dp[j]);
+        }
+        printf("\n");
+    }
+
+    return dp[capacity];
 }
