@@ -29,7 +29,8 @@
         "memory": "c",
         "limits.h": "c",
         "complex": "c",
-        "ratio": "c"
+        "ratio": "c",
+        "limits": "c"
     },
     "sourcekit-lsp.serverPath": "/usr/bin/sourcekit-lsp",
     "sourcekit-lsp.trace.server": "messages",

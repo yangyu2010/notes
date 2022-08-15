@@ -104,7 +104,7 @@ int longestCommonSubstring2(char *text1, char *text2) {
     return max;
 }
 
-int longestCommonSubstring(char *text1, char *text2) {
+int longestCommonSubstring3(char *text1, char *text2) {
     int len1 = strlen(text1);
     int len2 = strlen(text2);
     if (text1 == NULL || len1 == 0 || text2 == NULL || len2 == 0) {
@@ -139,6 +139,47 @@ int longestCommonSubstring(char *text1, char *text2) {
                 if (dp[j] > max) {
                     max = dp[j];
                 }
+            }
+        }
+    }
+
+    return max;
+}
+
+int longestCommonSubstring(char *text1, char *text2) {
+    int len1 = strlen(text1);
+    int len2 = strlen(text2);
+    if (text1 == NULL || len1 == 0 || text2 == NULL || len2 == 0) {
+        return 0;
+    }
+
+    char *rows = text1;
+    char *cols = text2;
+    int row = len1;
+    int col = len2;
+    if (len1 < len2) {
+        rows = text2;
+        cols = text1;
+        row = len2;
+        col = len1;
+    }
+
+    //根据行大小来定义dp数组
+    int dp[col + 1];
+    memset(dp, 0, sizeof(dp));
+    int max = 0;
+
+    for (int i = 1; i <= row; i++) { // 行
+        for (int j = col; j >= 1; j--) { // 从右边开始遍历
+            if (rows[i - 1] == cols[j - 1]) {
+                dp[j] = dp[j - 1] + 1;
+                printf("%c %c %d %d %d\n", rows[i - 1], cols[j - 1], i, j,
+                       dp[j]);
+            } else {
+                dp[j] = 0;
+            }
+            if (dp[j] > max) {
+                max = dp[j];
             }
         }
     }
