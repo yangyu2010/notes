@@ -107,3 +107,6 @@ fastlane/test_output
 
 iOSInjectionProject/
 
+*.o
+*.ko
+*.obj

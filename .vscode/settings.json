@@ -30,7 +30,9 @@
         "limits.h": "c",
         "complex": "c",
         "ratio": "c",
-        "limits": "c"
+        "limits": "c",
+        "bloom.h": "c",
+        "stdint.h": "c"
     },
     "sourcekit-lsp.serverPath": "/usr/bin/sourcekit-lsp",
     "sourcekit-lsp.trace.server": "messages",
