@@ -32,7 +32,8 @@
         "ratio": "c",
         "limits": "c",
         "bloom.h": "c",
-        "stdint.h": "c"
+        "stdint.h": "c",
+        "skiplist.h": "c"
     },
     "sourcekit-lsp.serverPath": "/usr/bin/sourcekit-lsp",
     "sourcekit-lsp.trace.server": "messages",
